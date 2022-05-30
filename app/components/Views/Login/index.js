@@ -57,6 +57,7 @@ import {
   LOGIN_VIEW_TITLE_ID,
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
+import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
