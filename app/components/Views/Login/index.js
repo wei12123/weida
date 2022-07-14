@@ -58,6 +58,8 @@ import {
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
 import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
+import { parseVaultValue } from '../../../util/validators';
+import { getVaultFromBackup } from '../../../core/backupVault';
 
 const deviceHeight = Device.getDeviceHeight();
 const breakPoint = deviceHeight < 700;
