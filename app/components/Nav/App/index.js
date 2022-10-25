@@ -191,6 +191,7 @@ const App = ({ selectedAddress, userLoggedIn }) => {
   const animationRef = useRef(null);
   const animationNameRef = useRef(null);
   const opacity = useRef(new Animated.Value(1)).current;
+  const authOnLoadAuthLock = useRef(false);
   const [navigator, setNavigator] = useState(undefined);
   const prevNavigator = useRef(navigator);
   const [route, setRoute] = useState();
@@ -354,6 +355,9 @@ const App = ({ selectedAddress, userLoggedIn }) => {
       } catch (error) {
         Logger.error(error);
       }
+
+      animationRef?.current?.play();
+      animationNameRef?.current?.play();
     }
     startApp();
   }, []);
@@ -516,10 +520,16 @@ const App = ({ selectedAddress, userLoggedIn }) => {
               component={OnboardingRootNav}
               options={{ headerShown: false }}
             />
-            {userLoggedIn && (
+            {userLoggedIn ? (
               <Stack.Screen
                 name={Routes.ONBOARDING.HOME_NAV}
                 component={Main}
+                options={{ headerShown: false }}
+              />
+            ) : (
+              <Stack.Screen
+                name="Login"
+                component={Login}
                 options={{ headerShown: false }}
               />
             )}
