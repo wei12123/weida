@@ -66,6 +66,7 @@ import formatNumber from '../../../util/formatNumber';
 import { allowedToBuy } from '../FiatOnRampAggregator';
 import { MM_SDK_REMOTE_ORIGIN } from '../../../core/SDKConnect';
 import createStyles from './styles';
+import ApproveTransactionHeader from '../ApproveTransactionHeader';
 
 const { ORIGIN_DEEPLINK, ORIGIN_QR_CODE } = AppConstants.DEEPLINKS;
 const POLLING_INTERVAL_ESTIMATED_L1_FEE = 30000;
@@ -622,13 +623,10 @@ class ApproveTransactionReview extends PureComponent {
     return (
       <>
         <View style={styles.section} testID={'approve-modal-test-id'}>
-          <TransactionHeader
-            currentPageInformation={{
-              origin,
-              spenderAddress,
-              title: host,
-              url: activeTabUrl,
-            }}
+          <ApproveTransactionHeader
+            origin={origin}
+            spenderAddress={spenderAddress}
+            url={activeTabUrl}
           />
           <Text reset style={styles.title} testID={'allow-access'}>
             {strings(
@@ -706,7 +704,6 @@ class ApproveTransactionReview extends PureComponent {
               confirmDisabled={Boolean(gasError) || transactionConfirmed}
             >
               <View style={styles.paddingHorizontal}>
-                <AccountInfoCard fromAddress={from} />
                 <View style={styles.section}>
                   <TransactionReview
                     gasSelected={gasSelected}
