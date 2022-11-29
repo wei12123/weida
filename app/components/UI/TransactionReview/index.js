@@ -69,7 +69,7 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     actionViewWrapper: {
-      height: Device.isMediumDevice() ? 105 : 290,
+      height: Device.isMediumDevice() ? 230 : 290,
     },
     actionViewChildren: {
       height: 200,
