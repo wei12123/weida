@@ -69,10 +69,10 @@ const createStyles = (colors) =>
       ...fontStyles.bold,
     },
     actionViewWrapper: {
-      height: Device.isMediumDevice() ? 230 : 290,
+      height: Device.isMediumDevice() ? 170 : 290,
     },
     actionViewChildren: {
-      height: 200,
+      height: 220,
     },
     accountTransactionWrapper: {
       flex: 1,
@@ -488,7 +488,7 @@ class TransactionReview extends PureComponent {
               }
             >
               <View style={styles.actionViewChildren}>
-                <ScrollView>
+                <ScrollView nestedScrollEnabled>
                   <View
                     style={styles.accountTransactionWrapper}
                     onStartShouldSetResponder={() => true}
