@@ -54,7 +54,8 @@ import {
 import EditPermission from './EditPermission';
 import Logger from '../../../util/Logger';
 import InfoModal from '../Swaps/components/InfoModal';
-import Text from '../../Base/Text';
+import Text, {TextVariants} from '../../../component-library/components/Texts/Text';
+import ButtonLink from '../../../component-library/components/Buttons/Button/variants/ButtonLink';
 import { getTokenList } from '../../../reducers/tokens';
 import TransactionReview from '../../UI/TransactionReview/TransactionReviewEIP1559Update';
 import ClipboardManager from '../../../core/ClipboardManager';
@@ -66,6 +67,7 @@ import formatNumber from '../../../util/formatNumber';
 import { allowedToBuy } from '../FiatOnRampAggregator';
 import { MM_SDK_REMOTE_ORIGIN } from '../../../core/SDKConnect';
 import createStyles from './styles';
+import VerifyContractDetails from './VerifyContractDetails/VerifyContractDetails'
 
 const { ORIGIN_DEEPLINK, ORIGIN_QR_CODE } = AppConstants.DEEPLINKS;
 const POLLING_INTERVAL_ESTIMATED_L1_FEE = 30000;
@@ -227,6 +229,7 @@ class ApproveTransactionReview extends PureComponent {
     spendLimitCustomValue: undefined,
     ticker: getTicker(this.props.ticker),
     viewDetails: false,
+    showContractDetails: false,
     spenderAddress: '0x...',
     transaction: this.props.transaction,
     token: {},
@@ -398,6 +401,12 @@ class ApproveTransactionReview extends PureComponent {
     Analytics.trackEvent(MetaMetricsEvents.DAPP_APPROVE_SCREEN_VIEW_DETAILS);
     this.setState({ viewDetails: !viewDetails });
   };
+
+  showVerifyContractDetails = () => {
+    const { showContractDetails } = this.state;
+    // Analytics
+    this.setState({ showContractDetails: !showContractDetails });
+  }
 
   toggleEditPermission = () => {
     const { editPermissionVisible } = this.state;
@@ -670,32 +679,7 @@ class ApproveTransactionReview extends PureComponent {
               }`,
             )}`}
           </Text>
-          <View style={styles.contactWrapper}>
-            <Text>{strings('nickname.contract')}: </Text>
-            <TouchableOpacity
-              style={styles.addressWrapper}
-              onPress={this.copyContractAddress}
-              testID={'contract-address'}
-            >
-              <Identicon address={this.state.transaction.to} diameter={20} />
-              {this.props.nicknameExists ? (
-                <Text numberOfLines={1} style={styles.address}>
-                  {this.props.nickname}
-                </Text>
-              ) : (
-                <EthereumAddress
-                  address={this.state.transaction.to}
-                  style={styles.address}
-                  type={'short'}
-                />
-              )}
-              <Feather name="copy" size={18} style={styles.actionIcon} />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.nickname} onPress={this.toggleDisplay}>
-            {this.props.nicknameExists ? 'Edit' : 'Add'}{' '}
-            {strings('nickname.nickname')}
-          </Text>
+          <ButtonLink variant={TextVariants.sBodyMD} onPress={this.showVerifyContractDetails} style={styles.verifyContractLink}>{strings('confirmation.token_allowance.verify_contract_details')}</ButtonLink>
           <View style={styles.actionViewWrapper}>
             <ActionView
               confirmButtonMode="confirm"
@@ -810,6 +794,21 @@ class ApproveTransactionReview extends PureComponent {
     );
   };
 
+  renderVerifyContractDetails = () => {
+    const { transaction, providerType } = this.props;
+    const { transaction: {to} } = this.state;
+    
+    return (
+      <VerifyContractDetails
+        toggleViewDetails={this.showVerifyContractDetails}
+        address={this.state.transaction.to}
+        copyContractAddress={this.copyContractAddress}
+        providerType={providerType}
+        contractName={this.props.nicknameExists}
+      />
+    );
+  };
+
   buyEth = () => {
     const { navigation } = this.props;
     /* this is kinda weird, we have to reject the transaction to collapse the modal */
@@ -875,12 +874,14 @@ class ApproveTransactionReview extends PureComponent {
   }
 
   render = () => {
-    const { viewDetails, editPermissionVisible } = this.state;
+    const { viewDetails, editPermissionVisible, showContractDetails } = this.state;
     const { isSigningQRObject } = this.props;
     return (
       <View>
         {viewDetails
           ? this.renderTransactionReview()
+          : showContractDetails
+          ? this.renderVerifyContractDetails()
           : editPermissionVisible
           ? this.renderEditPermission()
           : isSigningQRObject
