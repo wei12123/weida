@@ -10,6 +10,9 @@ const createStyles = (colors: any) =>
       width: '100%',
       paddingVertical: 10,
     },
+    actionViewWrapper: {
+      height: Device.isMediumDevice() ? '100%' : 630,
+    },
     title: {
       ...fontStyles.bold,
       fontSize: scaling.scale(24),
@@ -101,12 +104,6 @@ const createStyles = (colors: any) =>
     underline: {
       textDecorationLine: 'underline',
       ...fontStyles.bold,
-    },
-    actionViewWrapper: {
-      height: Device.isMediumDevice() ? 200 : 220,
-    },
-    actionViewChildren: {
-      height: 300,
     },
     actionViewQRObject: {
       height: 648,
