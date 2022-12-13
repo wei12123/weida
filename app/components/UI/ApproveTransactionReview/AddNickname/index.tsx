@@ -181,7 +181,6 @@ const AddNickname = (props: AddNicknameProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-
       {isBlockExplorerVisible ? (
         <ShowBlockExplorer
           setIsBlockExplorerVisible={setIsBlockExplorerVisible}

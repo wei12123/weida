@@ -22,7 +22,6 @@ import { setTransactionObject } from '../../../actions/transaction';
 import { GAS_ESTIMATE_TYPES } from '@metamask/gas-fee-controller';
 import { hexToBN } from '@metamask/controller-utils';
 import { fromTokenMinimalUnit } from '../../../util/number';
-import EthereumAddress from '../EthereumAddress';
 import {
   getTicker,
   getNormalizedTxState,
@@ -32,8 +31,6 @@ import {
   generateTxWithNewTokenAllowance,
   minimumTokenAllowance,
 } from '../../../util/transactions';
-import Feather from 'react-native-vector-icons/Feather';
-import Identicon from '../../UI/Identicon';
 import { showAlert } from '../../../actions/alert';
 import Analytics from '../../../core/Analytics/Analytics';
 import { MetaMetricsEvents } from '../../../core/Analytics';
@@ -54,7 +51,9 @@ import {
 import EditPermission from './EditPermission';
 import Logger from '../../../util/Logger';
 import InfoModal from '../Swaps/components/InfoModal';
-import Text, {TextVariants} from '../../../component-library/components/Texts/Text';
+import Text, {
+  TextVariants,
+} from '../../../component-library/components/Texts/Text';
 import ButtonLink from '../../../component-library/components/Buttons/Button/variants/ButtonLink';
 import { getTokenList } from '../../../reducers/tokens';
 import TransactionReview from '../../UI/TransactionReview/TransactionReviewEIP1559Update';
@@ -67,7 +66,8 @@ import formatNumber from '../../../util/formatNumber';
 import { allowedToBuy } from '../FiatOnRampAggregator';
 import { MM_SDK_REMOTE_ORIGIN } from '../../../core/SDKConnect';
 import createStyles from './styles';
-import VerifyContractDetails from './VerifyContractDetails/VerifyContractDetails'
+import VerifyContractDetails from './VerifyContractDetails/VerifyContractDetails';
+import ShowBlockExplorer from './ShowBlockExplorer';
 
 const { ORIGIN_DEEPLINK, ORIGIN_QR_CODE } = AppConstants.DEEPLINKS;
 const POLLING_INTERVAL_ESTIMATED_L1_FEE = 30000;
@@ -236,6 +236,7 @@ class ApproveTransactionReview extends PureComponent {
     showGasTooltip: false,
     gasTransactionObject: {},
     multiLayerL1FeeTotal: '0x0',
+    showBlockExplorerModal: false,
   };
 
   customSpendLimitInput = React.createRef();
@@ -406,7 +407,7 @@ class ApproveTransactionReview extends PureComponent {
     const { showContractDetails } = this.state;
     // Analytics
     this.setState({ showContractDetails: !showContractDetails });
-  }
+  };
 
   toggleEditPermission = () => {
     const { editPermissionVisible } = this.state;
@@ -583,8 +584,6 @@ class ApproveTransactionReview extends PureComponent {
     return createStyles(colors);
   };
 
-  toggleDisplay = () => this.props.onUpdateContractNickname();
-
   renderDetails = () => {
     const {
       host,
@@ -679,7 +678,13 @@ class ApproveTransactionReview extends PureComponent {
               }`,
             )}`}
           </Text>
-          <ButtonLink variant={TextVariants.sBodyMD} onPress={this.showVerifyContractDetails} style={styles.verifyContractLink}>{strings('confirmation.token_allowance.verify_contract_details')}</ButtonLink>
+          <ButtonLink
+            variant={TextVariants.sBodyMD}
+            onPress={this.showVerifyContractDetails}
+            style={styles.verifyContractLink}
+          >
+            {strings('confirmation.token_allowance.verify_contract_details')}
+          </ButtonLink>
           <View style={styles.actionViewWrapper}>
             <ActionView
               confirmButtonMode="confirm"
@@ -795,16 +800,57 @@ class ApproveTransactionReview extends PureComponent {
   };
 
   renderVerifyContractDetails = () => {
-    const { transaction, providerType } = this.props;
-    const { transaction: {to} } = this.state;
-    
+    const { providerType, nickname, onUpdateContractNickname } = this.props;
+    const {
+      transaction: { to },
+      showBlockExplorerModal,
+      showContractDetails,
+    } = this.state;
+
+    const toggleBlockExplorerModal = () => {
+      this.setState({
+        showBlockExplorerModal: !showBlockExplorerModal,
+        showContractDetails: !showContractDetails,
+      });
+    };
+
+    const toggleDisplay = () => onUpdateContractNickname();
     return (
       <VerifyContractDetails
-        toggleViewDetails={this.showVerifyContractDetails}
-        address={this.state.transaction.to}
-        copyContractAddress={this.copyContractAddress}
+        toggleVerifyContractView={this.showVerifyContractDetails}
+        toggleBlockExplorerView={toggleBlockExplorerModal}
+        contractAddress={to}
+        toggleNicknameView={toggleDisplay}
+        contractName={nickname}
+        copyAddress={this.copyContractAddress}
         providerType={providerType}
-        contractName={this.props.nicknameExists}
+      />
+    );
+  };
+
+  renderBlockExplorerView = () => {
+    const { providerType } = this.props;
+    const {
+      transaction: { to },
+      showBlockExplorerModal,
+      showContractDetails,
+    } = this.state;
+
+    const styles = this.getStyles();
+    const closeModal = () => {
+      this.setState({
+        showBlockExplorerModal: !showBlockExplorerModal,
+        showContractDetails: !showContractDetails,
+      });
+    };
+    return (
+      <ShowBlockExplorer
+        setIsBlockExplorerVisible={closeModal}
+        type={providerType}
+        contractAddress={to}
+        headerWrapperStyle={styles.headerWrapper}
+        headerTextStyle={styles.headerText}
+        iconStyle={styles.icon}
       />
     );
   };
@@ -874,14 +920,22 @@ class ApproveTransactionReview extends PureComponent {
   }
 
   render = () => {
-    const { viewDetails, editPermissionVisible, showContractDetails } = this.state;
+    const {
+      viewDetails,
+      editPermissionVisible,
+      showContractDetails,
+      showBlockExplorerModal,
+    } = this.state;
     const { isSigningQRObject } = this.props;
+
     return (
       <View>
         {viewDetails
           ? this.renderTransactionReview()
           : showContractDetails
           ? this.renderVerifyContractDetails()
+          : showBlockExplorerModal
+          ? this.renderBlockExplorerView()
           : editPermissionVisible
           ? this.renderEditPermission()
           : isSigningQRObject
