@@ -75,44 +75,44 @@ const CustomSpendCap = ({
 
   const MAX_VALUE_SELECTED = (
     <>
-      {strings('contract_allowance.custom_spend_cap.this_contract_allows')}
+      {strings('confirmation.custom_spend_cap.this_contract_allows')}
       <Text variant={TextVariants.sBodyMDBold} style={styles.description}>
         {` ${formatNumber(accountBalance)} ${ticker} `}
       </Text>
-      {strings('contract_allowance.custom_spend_cap.from_your_balance')}
+      {strings('confirmation.custom_spend_cap.from_your_balance')}
     </>
   );
 
   const NO_SELECTED = strings(
-    'contract_allowance.custom_spend_cap.no_value_selected',
+    'confirmation.custom_spend_cap.no_value_selected',
     { domain },
   );
 
   const DAPP_PROPOSED_VALUE_GREATER_THAN_ACCOUNT_BALANCE = (
     <>
-      {strings('contract_allowance.custom_spend_cap.this_contract_allows')}
+      {strings('confirmation.custom_spend_cap.this_contract_allows')}
       <Text variant={TextVariants.sBodyMDBold} style={styles.description}>
         {` ${formatNumber(accountBalance)} ${ticker} `}
       </Text>
-      {strings('contract_allowance.custom_spend_cap.from_your_current_balance')}
+      {strings('confirmation.custom_spend_cap.from_your_current_balance')}
       <Text variant={TextVariants.sBodyMDBold} style={styles.description}>
         {` ${formatNumber(dappValue)} ${ticker} `}
       </Text>
-      {strings('contract_allowance.custom_spend_cap.future_tokens')}
+      {strings('confirmation.custom_spend_cap.future_tokens')}
     </>
   );
 
   const INPUT_VALUE_GREATER_THAN_ACCOUNT_BALANCE = (
     <>
-      {strings('contract_allowance.custom_spend_cap.this_contract_allows')}
+      {strings('confirmation.custom_spend_cap.this_contract_allows')}
       <Text variant={TextVariants.sBodyMDBold} style={styles.description}>
         {` ${formatNumber(accountBalance)} ${ticker} `}
       </Text>
-      {strings('contract_allowance.custom_spend_cap.from_your_current_balance')}
+      {strings('confirmation.custom_spend_cap.from_your_current_balance')}
       <Text variant={TextVariants.sBodyMDBold} style={styles.description}>
         {` ${formatNumber(difference)} ${ticker} `}
       </Text>
-      {strings('contract_allowance.custom_spend_cap.future_tokens')}
+      {strings('confirmation.custom_spend_cap.future_tokens')}
     </>
   );
 
@@ -128,12 +128,12 @@ const CustomSpendCap = ({
         color={colors.error.default}
       />
       <Text variant={TextVariants.sBodyMDBold} style={styles.modalTitleDanger}>
-        {strings('contract_allowance.custom_spend_cap.be_careful')}
+        {strings('confirmation.custom_spend_cap.be_careful')}
       </Text>{' '}
     </>
   ) : (
     <Text variant={TextVariants.sBodyMDBold} style={styles.modalTitle}>
-      {strings('contract_allowance.custom_spend_cap.set_spend_cap')}
+      {strings('confirmation.custom_spend_cap.set_spend_cap')}
     </Text>
   );
 
@@ -147,12 +147,11 @@ const CustomSpendCap = ({
             <Text>
               {defaultValueSelected
                 ? strings(
-                    'contract_allowance.custom_spend_cap.info_modal_description_default',
+                    'confirmation.custom_spend_cap.info_modal_description_default',
                   )
-                : strings(
-                    'contract_allowance.custom_spend_cap.no_value_selected',
-                    { domain },
-                  )}
+                : strings('confirmation.custom_spend_cap.no_value_selected', {
+                    domain,
+                  })}
             </Text>
           }
           toggleModal={toggleModal}
@@ -161,7 +160,7 @@ const CustomSpendCap = ({
       <View style={styles.header}>
         <View style={styles.titleContainer}>
           <Text variant={TextVariants.sBodyMDBold} style={styles.title}>
-            {strings('contract_allowance.custom_spend_cap.title')}
+            {strings('confirmation.custom_spend_cap.title')}
           </Text>
           <Pressable onPress={toggleModal}>
             <Icon
@@ -200,7 +199,7 @@ const CustomSpendCap = ({
       </View>
       {value.length > 0 && inputHasError && (
         <Text variant={TextVariants.sBodyMD} style={styles.errorDescription}>
-          {strings('contract_allowance.custom_spend_cap.error_enter_number')}
+          {strings('confirmation.custom_spend_cap.error_enter_number')}
         </Text>
       )}
       <View style={styles.descriptionContainer}>
