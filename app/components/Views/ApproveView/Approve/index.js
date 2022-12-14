@@ -142,12 +142,14 @@ class Approve extends PureComponent {
     gasSelected: AppConstants.GAS_OPTIONS.MEDIUM,
     gasSelectedTemp: AppConstants.GAS_OPTIONS.MEDIUM,
     transactionConfirmed: false,
-    addNickname: false,
+    shouldAddNickname: false,
+    shouldVerifyContractDetails: false,
     suggestedGasLimit: undefined,
     eip1559GasObject: {},
     eip1559GasTransaction: {},
     legacyGasObject: {},
     legacyGasTransaction: {},
+    address: '',
   };
 
   computeGasEstimates = (overrideGasLimit, gasEstimateTypeChanged) => {
@@ -201,8 +203,16 @@ class Approve extends PureComponent {
     }
   };
 
-  onUpdateContractNickname = () => {
-    this.setState({ addNickname: !this.state.addNickname });
+  showVerifyContractDetails = () =>
+    this.setState({ shouldVerifyContractDetails: true });
+  closeVerifyContractDetails = () =>
+    this.setState({ shouldVerifyContractDetails: false });
+
+  toggleModal = (val) => {
+    this.setState({
+      shouldAddNickname: !this.state.shouldAddNickname,
+      address: val,
+    });
   };
 
   startPolling = async () => {
@@ -551,6 +561,8 @@ class Approve extends PureComponent {
       eip1559GasTransaction,
       legacyGasObject,
       gasError,
+      address,
+      shouldAddNickname,
     } = this.state;
 
     const {
@@ -582,11 +594,25 @@ class Approve extends PureComponent {
 
     const colors = this.context.colors || mockTheme.colors;
 
-    const addressData = checkIfAddressIsSaved(
+    const savedContactList = checkIfAddressIsSaved(
       addressBook,
       network,
       transaction,
     );
+
+    const savedContactListToArray = Object.values(addressBook).flatMap(
+      (value) => Object.values(value),
+    );
+
+    let addressNickname = '';
+
+    const filteredSavedContactList = savedContactListToArray.filter(
+      (contact) => contact.address === safeToChecksumAddress(address),
+    );
+
+    if (filteredSavedContactList.length > 0) {
+      addressNickname = filteredSavedContactList[0].name;
+    }
 
     if (!transaction.id) return null;
     return (
@@ -595,7 +621,9 @@ class Approve extends PureComponent {
         animationIn="slideInUp"
         animationOut="slideOutDown"
         style={
-          this.state.addNickname ? styles.updateNickView : styles.bottomModal
+          this.state.shouldAddNickname
+            ? styles.updateNickView
+            : styles.bottomModal
         }
         backdropColor={colors.overlay.default}
         backdropOpacity={1}
@@ -607,16 +635,12 @@ class Approve extends PureComponent {
         swipeDirection={'down'}
         propagateSwipe
       >
-        {this.state.addNickname ? (
+        {shouldAddNickname ? (
           <AddNickname
-            onUpdateContractNickname={this.onUpdateContractNickname}
-            contractAddress={transaction.to}
-            nicknameExists={addressData && !!addressData.length}
-            nickname={
-              addressData && addressData.length > 0
-                ? addressData[0].nickname
-                : ''
-            }
+            closeModal={this.toggleModal}
+            address={address}
+            savedContactListToArray={savedContactListToArray}
+            addressNickname={addressNickname}
           />
         ) : (
           <KeyboardAwareScrollView
@@ -641,12 +665,18 @@ class Approve extends PureComponent {
                   animateOnChange={animateOnChange}
                   isAnimating={isAnimating}
                   gasEstimationReady={ready}
+                  savedContactListToArray={savedContactListToArray}
                   transactionConfirmed={transactionConfirmed}
-                  onUpdateContractNickname={this.onUpdateContractNickname}
-                  nicknameExists={addressData && !!addressData.length}
+                  toggleModal={this.toggleModal}
+                  showVerifyContractDetails={this.showVerifyContractDetails}
+                  shouldVerifyContractDetails={
+                    this.state.shouldVerifyContractDetails
+                  }
+                  closeVerifyContractDetails={this.closeVerifyContractDetails}
+                  nicknameExists={savedContactList && !!savedContactList.length}
                   nickname={
-                    addressData && addressData.length > 0
-                      ? addressData[0].nickname
+                    savedContactList && savedContactList.length > 0
+                      ? savedContactList[0].nickname
                       : ''
                   }
                   chainId={chainId}

@@ -187,9 +187,9 @@ class ApproveTransactionReview extends PureComponent {
      */
     setTransactionObject: PropTypes.func,
     /**
-     * Update contract nickname
+     * toggle nickname modal
      */
-    onUpdateContractNickname: PropTypes.func,
+    toggleModal: PropTypes.func,
     /**
      * The saved nickname of the address
      */
@@ -216,6 +216,13 @@ class ApproveTransactionReview extends PureComponent {
      * eip1559 gas object for calculating eip1559 transaction
      */
     eip1559GasObject: PropTypes.object,
+    /**
+     * function to toggle the verify contract details modal
+     */
+    showVerifyContractDetails: PropTypes.func,
+    savedContactListToArray: PropTypes.array,
+    closeVerifyContractDetails: PropTypes.func,
+    shouldVerifyContractDetails: PropTypes.bool,
   };
 
   state = {
@@ -229,7 +236,6 @@ class ApproveTransactionReview extends PureComponent {
     spendLimitCustomValue: undefined,
     ticker: getTicker(this.props.ticker),
     viewDetails: false,
-    showContractDetails: false,
     spenderAddress: '0x...',
     transaction: this.props.transaction,
     token: {},
@@ -403,12 +409,6 @@ class ApproveTransactionReview extends PureComponent {
     this.setState({ viewDetails: !viewDetails });
   };
 
-  showVerifyContractDetails = () => {
-    const { showContractDetails } = this.state;
-    // Analytics
-    this.setState({ showContractDetails: !showContractDetails });
-  };
-
   toggleEditPermission = () => {
     const { editPermissionVisible } = this.state;
     !editPermissionVisible &&
@@ -442,9 +442,9 @@ class ApproveTransactionReview extends PureComponent {
     this.setState({ spendLimitCustomValue: value });
   };
 
-  copyContractAddress = async () => {
+  copyContractAddress = async (address) => {
     const { transaction } = this.props;
-    await ClipboardManager.setString(transaction.to);
+    await ClipboardManager.setString(address || transaction.to);
     this.props.showAlert({
       isVisible: true,
       autodismiss: 1500,
@@ -611,6 +611,7 @@ class ApproveTransactionReview extends PureComponent {
       legacyGasObject,
       eip1559GasObject,
       updateTransactionState,
+      showVerifyContractDetails,
     } = this.props;
     const styles = this.getStyles();
     const isTestNetwork = isTestNet(network);
@@ -680,7 +681,7 @@ class ApproveTransactionReview extends PureComponent {
           </Text>
           <ButtonLink
             variant={TextVariants.sBodyMD}
-            onPress={this.showVerifyContractDetails}
+            onPress={showVerifyContractDetails}
             style={styles.verifyContractLink}
           >
             {strings('confirmation.token_allowance.verify_contract_details')}
@@ -800,30 +801,40 @@ class ApproveTransactionReview extends PureComponent {
   };
 
   renderVerifyContractDetails = () => {
-    const { providerType, nickname, onUpdateContractNickname } = this.props;
+    const {
+      providerType,
+      savedContactListToArray,
+      toggleModal,
+      closeVerifyContractDetails,
+    } = this.props;
     const {
       transaction: { to },
       showBlockExplorerModal,
-      showContractDetails,
+      spenderAddress,
+      token: { symbol },
     } = this.state;
 
     const toggleBlockExplorerModal = () => {
       this.setState({
         showBlockExplorerModal: !showBlockExplorerModal,
-        showContractDetails: !showContractDetails,
       });
     };
 
-    const toggleDisplay = () => onUpdateContractNickname();
+    const showNickname = (address) => {
+      toggleModal(address);
+    };
+
     return (
       <VerifyContractDetails
-        toggleVerifyContractView={this.showVerifyContractDetails}
+        closeVerifyContractView={closeVerifyContractDetails}
         toggleBlockExplorerView={toggleBlockExplorerModal}
-        contractAddress={to}
-        toggleNicknameView={toggleDisplay}
-        contractName={nickname}
+        contractAddress={spenderAddress}
+        tokenAddress={to}
+        showNickname={showNickname}
+        savedContactListToArray={savedContactListToArray}
         copyAddress={this.copyContractAddress}
         providerType={providerType}
+        tokenSymbol={symbol}
       />
     );
   };
@@ -833,14 +844,12 @@ class ApproveTransactionReview extends PureComponent {
     const {
       transaction: { to },
       showBlockExplorerModal,
-      showContractDetails,
     } = this.state;
 
     const styles = this.getStyles();
     const closeModal = () => {
       this.setState({
         showBlockExplorerModal: !showBlockExplorerModal,
-        showContractDetails: !showContractDetails,
       });
     };
     return (
@@ -920,19 +929,15 @@ class ApproveTransactionReview extends PureComponent {
   }
 
   render = () => {
-    const {
-      viewDetails,
-      editPermissionVisible,
-      showContractDetails,
-      showBlockExplorerModal,
-    } = this.state;
-    const { isSigningQRObject } = this.props;
+    const { viewDetails, editPermissionVisible, showBlockExplorerModal } =
+      this.state;
+    const { isSigningQRObject, shouldVerifyContractDetails } = this.props;
 
     return (
       <View>
         {viewDetails
           ? this.renderTransactionReview()
-          : showContractDetails
+          : shouldVerifyContractDetails
           ? this.renderVerifyContractDetails()
           : showBlockExplorerModal
           ? this.renderBlockExplorerView()
