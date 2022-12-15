@@ -69,7 +69,6 @@ const Routes = {
     HOME: 'WalletTabHome',
   },
   VAULT_RECOVERY: {
-    ID: 'RestoreWallet',
     RESTORE_WALLET: 'RestoreWallet',
     WALLET_RESTORED: 'WalletRestored',
     WALLET_RESET_NEEDED: 'WalletResetNeeded',
