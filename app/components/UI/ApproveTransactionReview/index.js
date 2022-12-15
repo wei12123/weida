@@ -223,6 +223,8 @@ class ApproveTransactionReview extends PureComponent {
     savedContactListToArray: PropTypes.array,
     closeVerifyContractDetails: PropTypes.func,
     shouldVerifyContractDetails: PropTypes.bool,
+    frequentRpcList: PropTypes.array,
+    provider: PropTypes.object,
   };
 
   state = {
@@ -807,6 +809,8 @@ class ApproveTransactionReview extends PureComponent {
       savedContactListToArray,
       toggleModal,
       closeVerifyContractDetails,
+      frequentRpcList,
+      provider,
     } = this.props;
     const {
       transaction: { to },
@@ -838,12 +842,19 @@ class ApproveTransactionReview extends PureComponent {
         copyAddress={this.copyContractAddress}
         providerType={providerType}
         tokenSymbol={symbol}
+        networkProvider={provider}
+        frequentRpcList={frequentRpcList}
       />
     );
   };
 
   renderBlockExplorerView = () => {
-    const { providerType, showVerifyContractDetails } = this.props;
+    const {
+      providerType,
+      showVerifyContractDetails,
+      frequentRpcList,
+      provider,
+    } = this.props;
     const {
       transaction: { to },
       showBlockExplorerModal,
@@ -865,6 +876,8 @@ class ApproveTransactionReview extends PureComponent {
         headerWrapperStyle={styles.headerWrapper}
         headerTextStyle={styles.headerText}
         iconStyle={styles.icon}
+        networkProvider={provider}
+        frequentRpcList={frequentRpcList}
       />
     );
   };
@@ -958,7 +971,12 @@ class ApproveTransactionReview extends PureComponent {
 
 const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
+  frequentRpcList:
+    state.engine.backgroundState.PreferencesController.frequentRpcList,
+  selectedAddress:
+    state.engine.backgroundState.PreferencesController.selectedAddress,
   ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  provider: state.engine.backgroundState.NetworkController.provider,
   transaction: getNormalizedTxState(state),
   accountsLength: Object.keys(
     state.engine.backgroundState.AccountTrackerController.accounts || {},
