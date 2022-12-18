@@ -71,7 +71,7 @@ const AddNickname = (props: AddNicknameProps) => {
 
       setAddressErr(addressError);
       setErrContinue(errorContinue);
-      setAddressHasError(addressError !== null);
+      setAddressHasError(addressError);
     };
 
     validateAddressOrENSFromInput();
