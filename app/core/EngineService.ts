@@ -30,6 +30,7 @@ class EngineService {
   };
 
   private updateControllers = (store: any, engine: any) => {
+    console.log('vault/ updateControllers started');
     const controllers = [
       { name: 'AccountTrackerController' },
       { name: 'AddressBookController' },
@@ -91,6 +92,7 @@ class EngineService {
           update_bg_state_cb,
         );
     });
+    console.log('vault/ updateControllers finished');
   };
 
   /**
