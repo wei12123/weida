@@ -30,7 +30,6 @@ class EngineService {
   };
 
   private updateControllers = (store: any, engine: any) => {
-    console.log('vault/ updateControllers started');
     const controllers = [
       { name: 'AccountTrackerController' },
       { name: 'AddressBookController' },
@@ -92,7 +91,6 @@ class EngineService {
           update_bg_state_cb,
         );
     });
-    console.log('vault/ updateControllers finished');
   };
 
   /**
@@ -101,7 +99,6 @@ class EngineService {
    * @param store - Redux store
    */
   async initializeVaultFromBackup(): Promise<InitializeEngineResult> {
-    console.log('vault/ Engine Service', 'initializeVaultFromBackup');
     const keyringState = await getVaultFromBackup();
     const reduxState = importedStore.getState?.();
     const state = reduxState?.engine?.backgroundState || {};
