@@ -437,6 +437,11 @@ class TransactionReview extends PureComponent {
       dappSuggestedGasWarning,
       gasSelected,
       chainId,
+      updateTransactionState,
+      gasObject,
+      eip1559GasTransaction,
+      dappSuggestedGasPrice,
+      dappSuggestedEIP1559Gas,
     } = this.props;
     const {
       actionKey,
@@ -509,6 +514,11 @@ class TransactionReview extends PureComponent {
                       onUpdatingValuesEnd={onUpdatingValuesEnd}
                       animateOnChange={animateOnChange}
                       isAnimating={isAnimating}
+                      dappSuggestedGasPrice={dappSuggestedGasPrice}
+                      dappSuggestedEIP1559Gas={dappSuggestedEIP1559Gas}
+                      updateTransactionState={updateTransactionState}
+                      gasObject={gasObject}
+                      eip1559GasTransaction={eip1559GasTransaction}
                       multiLayerL1FeeTotal={multiLayerL1FeeTotal}
                     />
                   </View>
