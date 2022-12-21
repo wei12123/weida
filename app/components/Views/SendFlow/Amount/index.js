@@ -1290,12 +1290,14 @@ const mapStateToProps = (state, ownProps) => ({
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
   conversionRate:
     state.engine.backgroundState.CurrencyRateController.conversionRate,
-  providerType: state.engine.backgroundState.NetworkController.provider.type,
+  providerType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   primaryCurrency: state.settings.primaryCurrency,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   tokens: state.engine.backgroundState.TokensController.tokens,
   transactionState: ownProps.transaction || state.transaction,
   selectedAsset: state.transaction.selectedAsset,

@@ -870,10 +870,11 @@ const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   contractBalances:
     state.engine.backgroundState.TokenBalancesController.contractBalances,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   transaction: getNormalizedTxState(state),
   activeTabUrl: getActiveTabUrl(state),
   gasFeeEstimates:
@@ -887,7 +888,8 @@ const mapStateToProps = (state) => ({
   nativeCurrency:
     state.engine.backgroundState.CurrencyRateController.nativeCurrency,
   primaryCurrency: state.settings.primaryCurrency,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -352,7 +352,7 @@ class ApproveTransactionReview extends PureComponent {
       } = this.props;
       const { tokenSymbol, originalApproveAmount, encodedAmount } = this.state;
       const { NetworkController } = Engine.context;
-      const { chainId } = NetworkController?.state?.provider || {};
+      const { chainId } = NetworkController?.state?.providerConfig || {};
       const isDapp = !Object.values(AppConstants.DEEPLINKS).includes(
         transaction?.origin,
       );
@@ -905,17 +905,19 @@ const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   transaction: getNormalizedTxState(state),
   accountsLength: Object.keys(
     state.engine.backgroundState.AccountTrackerController.accounts || {},
   ).length,
   tokensLength: state.engine.backgroundState.TokensController.tokens.length,
-  providerType: state.engine.backgroundState.NetworkController.provider.type,
+  providerType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   primaryCurrency: state.settings.primaryCurrency,
   activeTabUrl: getActiveTabUrl(state),
   network: state.engine.backgroundState.NetworkController.network,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   tokenList: getTokenList(state),
 });
 

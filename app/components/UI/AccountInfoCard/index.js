@@ -218,7 +218,7 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.conversionRate,
   currentCurrency:
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
 });
 
 AccountInfoCard.contextType = ThemeContext;

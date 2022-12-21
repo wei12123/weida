@@ -437,7 +437,7 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
   nativeCurrency:
     state.engine.backgroundState.CurrencyRateController.nativeCurrency,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
 });
 
 export default connect(mapStateToProps)(GasEducationCarousel);

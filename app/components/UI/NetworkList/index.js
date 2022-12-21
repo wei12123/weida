@@ -140,9 +140,9 @@ export class NetworkList extends PureComponent {
      */
     frequentRpcList: PropTypes.array,
     /**
-     * NetworkController povider object
+     * NetworkController providerConfig object
      */
-    provider: PropTypes.object,
+    providerConfig: PropTypes.object,
     /**
      * Indicates whether third party API mode is enabled
      */
@@ -280,14 +280,14 @@ export class NetworkList extends PureComponent {
   };
 
   renderOtherNetworks = () => {
-    const { provider } = this.props;
+    const { providerConfig } = this.props;
     const colors = this.context.colors || mockTheme.colors;
 
     return this.getOtherNetworks().map((network, i) => {
       const { color, name } = Networks[network];
       const isCustomRpc = false;
       const selected =
-        provider.type === network ? (
+        providerConfig.type === network ? (
           <Icon name="check" size={20} color={colors.icon.default} />
         ) : null;
       return this.networkElement(
@@ -303,18 +303,18 @@ export class NetworkList extends PureComponent {
   };
 
   renderRpcNetworks = () => {
-    const { frequentRpcList, provider } = this.props;
+    const { frequentRpcList, providerConfig } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     return frequentRpcList.map(({ nickname, rpcUrl, chainId }, i) => {
       const { name } = { name: nickname || rpcUrl, chainId, color: null };
       const image = getImage(chainId);
       const isCustomRpc = true;
       const rpcTargetHref =
-        provider.rpcTarget && new URL(provider.rpcTarget)?.href;
+        providerConfig.rpcTarget && new URL(providerConfig.rpcTarget)?.href;
       const rpcURL = new URL(rpcUrl);
       const isSameRPC = rpcTargetHref === rpcURL.href;
       const selectedIcon =
-        isSameRPC && provider.type === RPC ? (
+        isSameRPC && providerConfig.type === RPC ? (
           <Icon name="check" size={20} color={colors.icon.default} />
         ) : null;
       return this.networkElement(
@@ -330,12 +330,12 @@ export class NetworkList extends PureComponent {
   };
 
   renderMainnet() {
-    const { provider } = this.props;
+    const { providerConfig } = this.props;
     const colors = this.context.colors || mockTheme.colors;
     const styles = this.getStyles();
     // Do not check using chainId. This check needs to specifically use `mainnet`.
     const checkIcon =
-      provider.type === MAINNET ? (
+      providerConfig.type === MAINNET ? (
         <Icon name="check" size={15} color={colors.icon.default} />
       ) : null;
     const { name: mainnetName } = Networks.mainnet;
@@ -416,7 +416,7 @@ export class NetworkList extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  provider: state.engine.backgroundState.NetworkController.provider,
+  providerConfig: state.engine.backgroundState.NetworkController.providerConfig,
   frequentRpcList:
     state.engine.backgroundState.PreferencesController.frequentRpcList,
   thirdPartyApiMode: state.privacy.thirdPartyApiMode,

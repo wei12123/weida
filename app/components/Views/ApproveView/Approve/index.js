@@ -701,7 +701,7 @@ class Approve extends PureComponent {
 
 const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   transaction: getNormalizedTxState(state),
   transactions: state.engine.backgroundState.TransactionController.transactions,
   accountsLength: Object.keys(
@@ -709,7 +709,8 @@ const mapStateToProps = (state) => ({
   ).length,
   tokensLength: state.engine.backgroundState.TokensController.tokens.length,
   primaryCurrency: state.settings.primaryCurrency,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   gasFeeEstimates:
     state.engine.backgroundState.GasFeeController.gasFeeEstimates,
   gasEstimateType:

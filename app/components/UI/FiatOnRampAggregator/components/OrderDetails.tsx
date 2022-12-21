@@ -172,9 +172,9 @@ interface Props {
    */
   order: FiatOrder;
   /**
-   * Current Network provider
+   * Current Network providerConfig
    */
-  provider: any;
+  providerConfig: any;
   /**
    * Frequent RPC list from PreferencesController
    */
@@ -183,7 +183,7 @@ interface Props {
 
 const OrderDetails: React.FC<Props> = ({
   order,
-  provider,
+  providerConfig,
   frequentRpcList,
 }: Props) => {
   const {
@@ -200,7 +200,7 @@ const OrderDetails: React.FC<Props> = ({
   } = order;
   const { colors } = useTheme();
   const trackEvent = useAnalytics();
-  const explorer = useBlockExplorer(provider, frequentRpcList);
+  const explorer = useBlockExplorer(providerConfig, frequentRpcList);
   const styles = createStyles(colors);
   const date = createdAt && toDateFormat(createdAt);
   const amountOut = Number(amount) - Number(cryptoFee);

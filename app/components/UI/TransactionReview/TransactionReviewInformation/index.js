@@ -713,7 +713,7 @@ const mapStateToProps = (state) => ({
   contractExchangeRates:
     state.engine.backgroundState.TokenRatesController.contractExchangeRates,
   transaction: getNormalizedTxState(state),
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   primaryCurrency: state.settings.primaryCurrency,
   showCustomNonce: state.settings.showCustomNonce,
   nativeCurrency:

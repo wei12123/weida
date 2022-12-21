@@ -79,7 +79,8 @@ function SwapLiveness({ isLive, chainId, setLiveness }) {
 
 const mapStateToProps = (state) => ({
   isLive: swapsLivenessSelector(state),
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

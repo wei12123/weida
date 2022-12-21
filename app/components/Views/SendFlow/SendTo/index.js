@@ -817,15 +817,17 @@ SendFlow.contextType = ThemeContext;
 const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   addressBook: state.engine.backgroundState.AddressBookController.addressBook,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
   selectedAsset: state.transaction.selectedAsset,
   identities: state.engine.backgroundState.PreferencesController.identities,
   keyrings: state.engine.backgroundState.KeyringController.keyrings,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   network: state.engine.backgroundState.NetworkController.network,
-  providerType: state.engine.backgroundState.NetworkController.provider.type,
+  providerType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   isPaymentRequest: state.transaction.paymentRequest,
   frequentRpcList:
     state.engine.backgroundState.PreferencesController.frequentRpcList,

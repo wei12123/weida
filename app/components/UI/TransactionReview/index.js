@@ -570,8 +570,9 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.TokenRatesController.contractExchangeRates,
   conversionRate:
     state.engine.backgroundState.CurrencyRateController.conversionRate,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   showHexData: state.settings.showHexData,
   transaction: getNormalizedTxState(state),
   browser: state.browser,

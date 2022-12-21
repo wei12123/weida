@@ -875,8 +875,9 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.PreferencesController.selectedAddress,
   tokens: state.engine.backgroundState.TokensController.tokens,
   primaryCurrency: state.settings.primaryCurrency,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   tokenList: getTokenListArray(state),
 });
 

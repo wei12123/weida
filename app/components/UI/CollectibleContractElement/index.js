@@ -294,7 +294,8 @@ CollectibleContractElement.propTypes = {
 
 const mapStateToProps = (state) => ({
   collectibleContracts: collectibleContractsSelector(state),
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
 });

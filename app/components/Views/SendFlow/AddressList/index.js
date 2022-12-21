@@ -374,7 +374,8 @@ const mapStateToProps = (state) => ({
   identities: state.engine.backgroundState.PreferencesController.identities,
   network: state.engine.backgroundState.NetworkController.network,
   transactions: state.engine.backgroundState.TransactionController.transactions,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 export default connect(mapStateToProps)(AddressList);

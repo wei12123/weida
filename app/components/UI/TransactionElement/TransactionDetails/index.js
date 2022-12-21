@@ -193,7 +193,7 @@ class TransactionDetails extends PureComponent {
   componentDidMount = () => {
     const {
       network: {
-        provider: { rpcTarget, type },
+        providerConfig: { rpcTarget, type },
       },
       frequentRpcList,
     } = this.props;
@@ -213,7 +213,7 @@ class TransactionDetails extends PureComponent {
       transactionObject: { networkID },
       transactionDetails: { transactionHash },
       network: {
-        provider: { type },
+        providerConfig: { type },
       },
       close,
     } = this.props;
@@ -421,7 +421,8 @@ class TransactionDetails extends PureComponent {
 
 const mapStateToProps = (state) => ({
   network: state.engine.backgroundState.NetworkController,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   frequentRpcList:
     state.engine.backgroundState.PreferencesController.frequentRpcList,
   selectedAddress:

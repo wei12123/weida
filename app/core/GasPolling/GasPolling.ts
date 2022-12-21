@@ -57,7 +57,7 @@ export const useDataStore = () => {
       state.engine.backgroundState.CurrencyRateController.nativeCurrency,
       state.engine.backgroundState.AccountTrackerController.accounts,
       state.engine.backgroundState.TokenBalancesController.contractBalances,
-      state.engine.backgroundState.NetworkController.provider.ticker,
+      state.engine.backgroundState.NetworkController.providerConfig.ticker,
       state.transaction,
       state.transaction.selectedAsset,
       state.settings.showCustomNonce,

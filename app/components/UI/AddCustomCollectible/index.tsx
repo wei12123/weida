@@ -84,7 +84,7 @@ const AddCustomCollectible = ({
   );
   const chainId = useSelector(
     (state: any) =>
-      state.engine.backgroundState.NetworkController.provider.chainId,
+      state.engine.backgroundState.NetworkController.providerConfig.chainId,
   );
 
   useEffect(() => {

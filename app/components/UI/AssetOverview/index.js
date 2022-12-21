@@ -409,8 +409,9 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.TokenBalancesController.contractBalances,
   tokenExchangeRates:
     state.engine.backgroundState.TokenRatesController.contractExchangeRates,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   swapsIsLive: swapsLivenessSelector(state),
   swapsTokens: swapsTokensObjectSelector(state),
   tokenList: getTokenList(state),

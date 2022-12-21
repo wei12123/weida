@@ -219,9 +219,9 @@ class Engine {
           ),
         getCurrentNetworkEIP1559Compatibility: async () =>
           await networkController.getEIP1559Compatibility(),
-        getChainId: () => networkController.state.provider.chainId,
+        getChainId: () => networkController.state.providerConfig.chainId,
         getCurrentNetworkLegacyGasAPICompatibility: () => {
-          const chainId = networkController.state.provider.chainId;
+          const chainId = networkController.state.providerConfig.chainId;
           return (
             isMainnetByChainId(chainId) ||
             chainId === swapsUtils.BSC_CHAIN_ID ||
@@ -293,7 +293,7 @@ class Engine {
                 token_standard: 'ERC20',
                 asset_type: 'token',
                 chain_id: getDecimalChainId(
-                  networkController.state.provider.chainId,
+                  networkController.state.providerConfig.chainId,
                 ),
               },
             );
@@ -432,12 +432,12 @@ class Engine {
         (state: { network: string, provider: { chainId: any } }) => {
           if (
             state.network !== 'loading' &&
-            state.provider.chainId !== currentChainId
+            state.providerConfig.chainId !== currentChainId
           ) {
             // We should add a state or event emitter saying the provider changed
             setTimeout(() => {
               this.configureControllersOnNetworkChange();
-              currentChainId = state.provider.chainId;
+              currentChainId = state.providerConfig.chainId;
             }, 500);
           }
         },
@@ -477,7 +477,7 @@ class Engine {
 
     SwapsController.configure({
       provider,
-      chainId: NetworkControllerState?.provider?.chainId,
+      chainId: NetworkControllerState?.providerConfig?.chainId,
       pollCountLimit: AppConstants.SWAPS.POLL_COUNT_LIMIT,
     });
     TransactionController.configure({ provider });
@@ -491,7 +491,7 @@ class Engine {
     const { TransactionController, PreferencesController, NetworkController } =
       this.context;
     const { selectedAddress } = PreferencesController.state;
-    const { type: networkType } = NetworkController.state.provider;
+    const { type: networkType } = NetworkController.state.providerConfig;
     const { networkId } = Networks[networkType];
     try {
       const lastIncomingTxBlockInfoStr = await AsyncStorage.getItem(

@@ -746,7 +746,8 @@ const mapStateToProps = (state) => ({
   contractBalances:
     state.engine.backgroundState.TokenBalancesController.contractBalances,
   transaction: state.transaction,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   tokens: state.engine.backgroundState.TokensController.tokens,
   network: state.engine.backgroundState.NetworkController.network,
   identities: state.engine.backgroundState.PreferencesController.identities,

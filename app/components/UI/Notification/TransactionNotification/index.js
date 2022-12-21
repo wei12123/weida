@@ -424,8 +424,9 @@ const mapStateToProps = (state) => ({
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
   transactions: state.engine.backgroundState.TransactionController.transactions,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   tokens: state.engine.backgroundState.TokensController.tokens.reduce(
     (tokens, token) => {
       tokens[token.address] = token;

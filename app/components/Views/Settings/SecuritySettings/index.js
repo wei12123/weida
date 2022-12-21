@@ -1179,7 +1179,7 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.PreferencesController.useNftDetection,
   passwordHasBeenSet: state.user.passwordSet,
   seedphraseBackedUp: state.user.seedphraseBackedUp,
-  type: state.engine.backgroundState.NetworkController.provider.type,
+  type: state.engine.backgroundState.NetworkController.providerConfig.type,
 });
 
 const mapDispatchToProps = (dispatch) => ({

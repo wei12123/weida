@@ -16,8 +16,9 @@ function NetworkMainAssetLogo({ chainId, ticker, style, big, biggest }) {
 }
 
 const mapStateToProps = (state) => ({
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
 });
 
 NetworkMainAssetLogo.propTypes = {

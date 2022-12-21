@@ -500,9 +500,11 @@ const mapStateToProps = (state) => ({
   transactions: state.engine.backgroundState.TransactionController.transactions,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   showCustomNonce: state.settings.showCustomNonce,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   activeTabUrl: getActiveTabUrl(state),
 });
 

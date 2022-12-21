@@ -4,7 +4,7 @@ import { compareTokenIds } from '../../util/tokens';
 const addressSelector = (state) =>
   state.engine.backgroundState.PreferencesController.selectedAddress;
 const chainIdSelector = (state) =>
-  state.engine.backgroundState.NetworkController.provider.chainId;
+  state.engine.backgroundState.NetworkController.providerConfig.chainId;
 const favoritesSelector = (state) => state.collectibles.favorites;
 
 const allNftContractsSelector = (state) =>

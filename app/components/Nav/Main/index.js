@@ -384,7 +384,8 @@ Main.propTypes = {
 const mapStateToProps = (state) => ({
   lockTime: state.settings.lockTime,
   thirdPartyApiMode: state.privacy.thirdPartyApiMode,
-  providerType: state.engine.backgroundState.NetworkController.provider.type,
+  providerType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   network: state.engine.backgroundState.NetworkController,
   backUpSeedphraseVisible: state.user.backUpSeedphraseVisible,
 });

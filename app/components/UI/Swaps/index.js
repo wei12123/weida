@@ -164,7 +164,7 @@ function SwapsAmountView({
   accounts,
   selectedAddress,
   chainId,
-  provider,
+  providerConfig,
   frequentRpcList,
   balances,
   tokensWithBalance,
@@ -181,7 +181,7 @@ function SwapsAmountView({
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const explorer = useBlockExplorer(provider, frequentRpcList);
+  const explorer = useBlockExplorer(providerConfig, frequentRpcList);
   const initialSource = route.params?.sourceToken ?? SWAPS_NATIVE_ADDRESS;
   const [amount, setAmount] = useState('0');
   const [slippage, setSlippage] = useState(AppConstants.SWAPS.DEFAULT_SLIPPAGE);
@@ -943,7 +943,7 @@ SwapsAmountView.propTypes = {
   /**
    * Current Network provider
    */
-  provider: PropTypes.object,
+  providerConfig: PropTypes.object,
   /**
    * Chain Id
    */
@@ -972,10 +972,11 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.TokenRatesController.contractExchangeRates,
   currentCurrency:
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
-  provider: state.engine.backgroundState.NetworkController.provider,
+  providerConfig: state.engine.backgroundState.NetworkController.providerConfig,
   frequentRpcList:
     state.engine.backgroundState.PreferencesController.frequentRpcList,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   tokensWithBalance: swapsTokensWithBalanceSelector(state),
   tokensTopAssets: swapsTopAssetsSelector(state),
   userHasOnboarded: swapsHasOnboardedSelector(state),

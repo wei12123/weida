@@ -129,7 +129,7 @@ const INITIAL_PAYMENT_METHOD = '/payments/debit-credit-card';
 
 const ordersSelector = (state) => state.fiatOrders.orders || [];
 export const chainIdSelector = (state) =>
-  state.engine.backgroundState.NetworkController.provider.chainId;
+  state.engine.backgroundState.NetworkController.providerConfig.chainId;
 
 export const selectedAddressSelector = (state) =>
   state.engine.backgroundState.PreferencesController.selectedAddress;

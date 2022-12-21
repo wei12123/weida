@@ -213,8 +213,10 @@ const mapStateToProps = (state) => ({
   tokens: state.engine.backgroundState.TokensController.tokens,
   identities: state.engine.backgroundState.PreferencesController.identities,
   transactions: state.engine.backgroundState.TransactionController.transactions,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -42,7 +42,7 @@ function addMetadata(chainId, tokens) {
 // * Selectors
 
 const chainIdSelector = (state) =>
-  state.engine.backgroundState.NetworkController.provider.chainId;
+  state.engine.backgroundState.NetworkController.providerConfig.chainId;
 const swapsStateSelector = (state) => state.swaps;
 /**
  * Returns the swaps liveness state

@@ -523,7 +523,8 @@ TransactionReviewEIP1559.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 export default connect(mapStateToProps)(TransactionReviewEIP1559);

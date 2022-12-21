@@ -242,8 +242,10 @@ const mapStateToProps = (state) => ({
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
   tokensLength: state.engine.backgroundState.TokensController.tokens.length,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 AccountApproval.contextType = ThemeContext;

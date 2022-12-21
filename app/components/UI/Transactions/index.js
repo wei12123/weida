@@ -223,7 +223,7 @@ class Transactions extends PureComponent {
   updateBlockExplorer = () => {
     const {
       network: {
-        provider: { type, rpcTarget },
+        providerConfig: { type, rpcTarget },
       },
       frequentRpcList,
     } = this.props;
@@ -339,7 +339,7 @@ class Transactions extends PureComponent {
       navigation,
       network: {
         network,
-        provider: { type },
+        providerConfig: { type },
       },
       selectedAddress,
       close,
@@ -379,7 +379,7 @@ class Transactions extends PureComponent {
     const {
       chainId,
       network: {
-        provider: { type },
+        providerConfig: { type },
       },
     } = this.props;
     const blockExplorerText = () => {
@@ -744,7 +744,8 @@ class Transactions extends PureComponent {
 
 const mapStateToProps = (state) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   collectibleContracts: collectibleContractsSelector(state),
   contractExchangeRates:
     state.engine.backgroundState.TokenRatesController.contractExchangeRates,
@@ -772,7 +773,8 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.nativeCurrency,
   gasEstimateType:
     state.engine.backgroundState.GasFeeController.gasEstimateType,
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
 });
 
 Transactions.contextType = ThemeContext;

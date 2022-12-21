@@ -389,7 +389,8 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.conversionRate,
   currentCurrency:
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 TransactionReviewFeeCard.contextType = ThemeContext;

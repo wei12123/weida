@@ -1401,11 +1401,13 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.conversionRate,
   network: state.engine.backgroundState.NetworkController.network,
   identities: state.engine.backgroundState.PreferencesController.identities,
-  providerType: state.engine.backgroundState.NetworkController.provider.type,
+  providerType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
   showHexData: state.settings.showHexData,
   showCustomNonce: state.settings.showCustomNonce,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   keyrings: state.engine.backgroundState.KeyringController.keyrings,
   transaction: getNormalizedTxState(state),
   selectedAsset: state.transaction.selectedAsset,

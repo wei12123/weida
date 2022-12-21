@@ -107,9 +107,9 @@ class NetworksSettings extends PureComponent {
      */
     navigation: PropTypes.object,
     /**
-     * NetworkController povider object
+     * NetworkController providerConfig object
      */
-    provider: PropTypes.object,
+    providerConfig: PropTypes.object,
     /**
      * Indicates whether third party API mode is enabled
      */
@@ -174,8 +174,11 @@ class NetworksSettings extends PureComponent {
 
   removeNetwork = () => {
     // Check if it's the selected network and then switch to mainnet first
-    const { provider } = this.props;
-    if (provider.rpcTarget === this.networkToRemove && provider.type === RPC) {
+    const { providerConfig } = this.props;
+    if (
+      providerConfig.rpcTarget === this.networkToRemove &&
+      providerConfig.type === RPC
+    ) {
       this.switchToMainnet();
     }
     const { PreferencesController } = Engine.context;
@@ -417,7 +420,7 @@ class NetworksSettings extends PureComponent {
 NetworksSettings.contextType = ThemeContext;
 
 const mapStateToProps = (state) => ({
-  provider: state.engine.backgroundState.NetworkController.provider,
+  providerConfig: state.engine.backgroundState.NetworkController.providerConfig,
   frequentRpcList:
     state.engine.backgroundState.PreferencesController.frequentRpcList,
   thirdPartyApiMode: state.privacy.thirdPartyApiMode,

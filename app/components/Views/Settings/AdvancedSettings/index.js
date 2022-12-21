@@ -477,7 +477,8 @@ const mapStateToProps = (state) => ({
   fullState: state,
   isTokenDetectionEnabled:
     state.engine.backgroundState.PreferencesController.useTokenDetection,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 const mapDispatchToProps = (dispatch) => ({

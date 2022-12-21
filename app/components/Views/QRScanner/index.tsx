@@ -62,7 +62,7 @@ const QRScanner = () => {
 
   const currentChainId = useSelector(
     (state: any) =>
-      state.engine.backgroundState.NetworkController.provider.chainId,
+      state.engine.backgroundState.NetworkController.providerConfig.chainId,
   );
 
   const goBack = useCallback(() => {

@@ -248,13 +248,14 @@ const mapStateToProps = (state: any) => ({
   accounts: state.engine.backgroundState.AccountTrackerController.accounts,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
   gasFeeEstimates:
     state.engine.backgroundState.GasFeeController.gasFeeEstimates,
   gasEstimateType:
     state.engine.backgroundState.GasFeeController.gasEstimateType,
   primaryCurrency: state.settings.primaryCurrency,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
 });
 
 export default connect(mapStateToProps)(UpdateEIP1559Tx);

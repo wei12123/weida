@@ -330,7 +330,7 @@ class Tokens extends PureComponent {
         {
           source: 'detected',
           chain_id: getDecimalChainId(
-            NetworkController?.state?.provider?.chainId,
+            NetworkController?.state?.providerConfig?.chainId,
           ),
           tokens: detectedTokens.map(
             (token) => `${token.symbol} - ${token.address}`,
@@ -393,7 +393,7 @@ class Tokens extends PureComponent {
         {
           source: 'manual',
           chain_id: getDecimalChainId(
-            NetworkController?.state?.provider?.chainId,
+            NetworkController?.state?.providerConfig?.chainId,
           ),
         },
       );
@@ -427,7 +427,7 @@ class Tokens extends PureComponent {
           asset_type: 'token',
           tokens: [`${symbol} - ${tokenAddress}`],
           chain_id: getDecimalChainId(
-            NetworkController?.state?.provider?.chainId,
+            NetworkController?.state?.providerConfig?.chainId,
           ),
         }),
       );
@@ -465,7 +465,8 @@ class Tokens extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   currentCurrency:
     state.engine.backgroundState.CurrencyRateController.currentCurrency,
   conversionRate:

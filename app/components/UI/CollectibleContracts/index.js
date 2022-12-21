@@ -317,8 +317,10 @@ CollectibleContracts.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   selectedAddress:
     state.engine.backgroundState.PreferencesController.selectedAddress,
   useNftDetection:

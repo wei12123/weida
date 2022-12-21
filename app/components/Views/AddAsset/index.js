@@ -183,8 +183,10 @@ class AddAsset extends PureComponent {
 AddAsset.contextType = ThemeContext;
 
 const mapStateToProps = (state) => ({
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   useNftDetection:
     state.engine.backgroundState.PreferencesController.useNftDetection,
 });

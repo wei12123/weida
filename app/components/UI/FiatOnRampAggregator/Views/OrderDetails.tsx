@@ -35,8 +35,9 @@ export const createOrderDetailsNavDetails =
 
 const OrderDetails = () => {
   const trackEvent = useAnalytics();
-  const provider = useSelector(
-    (state: any) => state.engine.backgroundState.NetworkController.provider,
+  const providerConfig = useSelector(
+    (state: any) =>
+      state.engine.backgroundState.NetworkController.providerConfig,
   );
   const frequentRpcList = useSelector(
     (state: any) =>
@@ -124,7 +125,7 @@ const OrderDetails = () => {
           <ScreenLayout.Content>
             <OrderDetail
               order={order}
-              provider={provider}
+              providerConfig={providerConfig}
               frequentRpcList={frequentRpcList}
             />
           </ScreenLayout.Content>

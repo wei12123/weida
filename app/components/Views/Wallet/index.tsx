@@ -120,7 +120,7 @@ const Wallet = ({ navigation }: any) => {
    */
   const ticker = useSelector(
     (state: any) =>
-      state.engine.backgroundState.NetworkController.provider.ticker,
+      state.engine.backgroundState.NetworkController.providerConfig.ticker,
   );
   /**
    * Current onboarding wizard step

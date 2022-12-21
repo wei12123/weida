@@ -345,7 +345,8 @@ class SignatureRequest extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
-  networkType: state.engine.backgroundState.NetworkController.provider.type,
+  networkType:
+    state.engine.backgroundState.NetworkController.providerConfig.type,
 });
 
 SignatureRequest.contextType = ThemeContext;

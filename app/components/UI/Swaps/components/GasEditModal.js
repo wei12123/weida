@@ -547,8 +547,9 @@ const mapStateToProps = (state) => ({
     state.engine.backgroundState.CurrencyRateController.conversionRate,
   nativeCurrency:
     state.engine.backgroundState.CurrencyRateController.nativeCurrency,
-  ticker: state.engine.backgroundState.NetworkController.provider.ticker,
-  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
+  ticker: state.engine.backgroundState.NetworkController.providerConfig.ticker,
+  chainId:
+    state.engine.backgroundState.NetworkController.providerConfig.chainId,
   primaryCurrency: state.settings.primaryCurrency,
 });
 

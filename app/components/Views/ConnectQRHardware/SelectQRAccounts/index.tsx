@@ -100,7 +100,8 @@ const SelectQRAccounts = (props: ISelectQRAccountsProps) => {
   const styles = createStyle(colors);
   const navigation = useNavigation();
   const provider = useSelector(
-    (state: any) => state.engine.backgroundState.NetworkController.provider,
+    (state: any) =>
+      state.engine.backgroundState.NetworkController.providerConfig,
   );
   const frequentRpcList = useSelector(
     (state: any) =>
