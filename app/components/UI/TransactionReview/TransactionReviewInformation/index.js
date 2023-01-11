@@ -217,6 +217,10 @@ class TransactionReviewInformation extends PureComponent {
      */
     gasObject: PropTypes.object,
     /**
+     * netowrk chainid
+     */
+    chainId: PropTypes.string,
+    /**
      * update gas transaction state to parent
      */
     updateTransactionState: PropTypes.func,
@@ -547,6 +551,7 @@ class TransactionReviewInformation extends PureComponent {
       eip1559GasTransaction,
       dappSuggestedEIP1559Gas,
       dappSuggestedGasPrice,
+      chainId,
     } = this.props;
 
     let host;
@@ -566,6 +571,7 @@ class TransactionReviewInformation extends PureComponent {
         primaryCurrency={primaryCurrency}
         gasSelected={gasSelected}
         onEdit={this.edit}
+        chainId={chainId}
         origin={host}
         originWarning={originWarning}
         onUpdatingValuesStart={onUpdatingValuesStart}
@@ -602,6 +608,7 @@ class TransactionReviewInformation extends PureComponent {
       updateTransactionState,
       dappSuggestedEIP1559Gas,
       dappSuggestedGasPrice,
+      chainId,
     } = this.props;
 
     let totalGas =
@@ -625,6 +632,7 @@ class TransactionReviewInformation extends PureComponent {
         primaryCurrency={primaryCurrency}
         onEdit={() => this.edit()}
         over={over}
+        chainId={chainId}
         onUpdatingValuesStart={onUpdatingValuesStart}
         onUpdatingValuesEnd={onUpdatingValuesEnd}
         animateOnChange={animateOnChange}
@@ -746,6 +754,7 @@ const mapStateToProps = (state) => ({
   showCustomNonce: state.settings.showCustomNonce,
   nativeCurrency:
     state.engine.backgroundState.CurrencyRateController.nativeCurrency,
+  chainId: state.engine.backgroundState.NetworkController.provider.chainId,
 });
 
 const mapDispatchToProps = (dispatch) => ({
