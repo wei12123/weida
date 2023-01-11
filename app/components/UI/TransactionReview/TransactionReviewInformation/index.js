@@ -589,6 +589,7 @@ class TransactionReviewInformation extends PureComponent {
       isAnimating,
       multiLayerL1FeeTotal,
       gasObject,
+      gasSelected,
       updateTransactionState,
       dappSuggestedEIP1559Gas,
       dappSuggestedGasPrice,
@@ -625,6 +626,7 @@ class TransactionReviewInformation extends PureComponent {
         dappSuggestedEIP1559Gas={dappSuggestedEIP1559Gas}
         updateTransactionState={updateTransactionState}
         onlyGas
+        gasSelected={gasSelected}
         dappSuggestedGasPrice={dappSuggestedGasPrice}
       />
     );
