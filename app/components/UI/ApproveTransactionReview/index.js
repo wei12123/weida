@@ -21,7 +21,7 @@ import { strings } from '../../../../locales/i18n';
 import { setTransactionObject } from '../../../actions/transaction';
 import { GAS_ESTIMATE_TYPES } from '@metamask/gas-fee-controller';
 import { hexToBN } from '@metamask/controller-utils';
-import { fromTokenMinimalUnit } from '../../../util/number';
+import { fromTokenMinimalUnit, renderFromTokenMinimalUnit } from '../../../util/number';
 import EthereumAddress from '../EthereumAddress';
 import {
   getTicker,
@@ -66,6 +66,9 @@ import formatNumber from '../../../util/formatNumber';
 import { allowedToBuy } from '../FiatOnRampAggregator';
 import { MM_SDK_REMOTE_ORIGIN } from '../../../core/SDKConnect';
 import createStyles from './styles';
+import CustomSpendCap from '../../../component-library/components-temp/CustomSpendCap';
+import {getAccountBalance} from '../../../util/dappTransactions';
+
 
 const { ORIGIN_DEEPLINK, ORIGIN_QR_CODE } = AppConstants.DEEPLINKS;
 const POLLING_INTERVAL_ESTIMATED_L1_FEE = 30000;
@@ -595,7 +598,10 @@ class ApproveTransactionReview extends PureComponent {
       multiLayerL1FeeTotal,
     } = this.state;
     const {
+      accounts,
+      selectedAddress,
       primaryCurrency,
+      tokenBalances,
       gasError,
       activeTabUrl,
       transaction: { origin },
@@ -628,6 +634,19 @@ class ApproveTransactionReview extends PureComponent {
       gasEstimateType === GAS_ESTIMATE_TYPES.FEE_MARKET ||
       gasEstimateType === GAS_ESTIMATE_TYPES.NONE;
 
+      console.log(tokenBalances, 'tokenBalances[address]')
+
+      // todo: 
+      // temporal state.
+      const userEnteredCustomSpend = false
+      const selectedBalance = accounts[selectedAddress].balance
+      const confirmBalance = getAccountBalance(selectedBalance)
+ 
+      // const balance =
+      // address in tokenBalances
+      //   ? renderFromTokenMinimalUnit(tokenBalances[address], decimals)
+      //   : undefined;
+      console.log(host, 'host')
     return (
       <>
         <View style={styles.section} testID={'approve-modal-test-id'}>
@@ -717,27 +736,30 @@ class ApproveTransactionReview extends PureComponent {
               <View style={styles.paddingHorizontal}>
                 <AccountInfoCard />
                 <View style={styles.section}>
-                  <TransactionReview
-                    gasSelected={gasSelected}
-                    primaryCurrency={primaryCurrency}
-                    hideTotal
-                    noMargin
-                    onEdit={this.edit}
-                    chainId={this.props.chainId}
-                    onUpdatingValuesStart={onUpdatingValuesStart}
-                    onUpdatingValuesEnd={onUpdatingValuesEnd}
-                    animateOnChange={animateOnChange}
-                    isAnimating={isAnimating}
-                    gasEstimationReady={gasEstimationReady}
-                    legacy={!showFeeMarket}
-                    gasObject={
-                      !showFeeMarket ? legacyGasObject : eip1559GasObject
-                    }
-                    updateTransactionState={updateTransactionState}
-                    onlyGas
-                    multiLayerL1FeeTotal={multiLayerL1FeeTotal}
-                  />
-
+                  {userEnteredCustomSpend ? (
+                        <TransactionReview
+                        gasSelected={gasSelected}
+                        primaryCurrency={primaryCurrency}
+                        hideTotal
+                        noMargin
+                        onEdit={this.edit}
+                        chainId={this.props.chainId}
+                        onUpdatingValuesStart={onUpdatingValuesStart}
+                        onUpdatingValuesEnd={onUpdatingValuesEnd}
+                        animateOnChange={animateOnChange}
+                        isAnimating={isAnimating}
+                        gasEstimationReady={gasEstimationReady}
+                        legacy={!showFeeMarket}
+                        gasObject={
+                          !showFeeMarket ? legacyGasObject : eip1559GasObject
+                        }
+                        updateTransactionState={updateTransactionState}
+                        onlyGas
+                        multiLayerL1FeeTotal={multiLayerL1FeeTotal}
+                      />
+                  ) : (
+                    <CustomSpendCap ticker={tokenSymbol} dappProposedValue={originalApproveAmount} accountBalance={confirmBalance} domain={host} onInputChanged={(val) => console.log(val, 'val')} />
+                  )}
                   {gasError && (
                     <View style={styles.errorWrapper}>
                       {isTestNetwork || allowedToBuy(network) ? (
@@ -915,6 +937,7 @@ const mapStateToProps = (state) => ({
   network: state.engine.backgroundState.NetworkController.network,
   chainId: state.engine.backgroundState.NetworkController.provider.chainId,
   tokenList: getTokenList(state),
+  tokenBalances: state.engine.backgroundState.TokenBalancesController.contractBalances,
 });
 
 const mapDispatchToProps = (dispatch) => ({
