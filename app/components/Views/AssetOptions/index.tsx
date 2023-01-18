@@ -4,10 +4,9 @@ import ReusableModal, { ReusableModalRef } from '../../UI/ReusableModal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fontStyles } from '../../../styles/common';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
 import { strings } from '../../../../locales/i18n';
 import { useTheme } from '../../../util/theme';
-import useBlockExplorer from '../../../components/UI/Swaps/utils/useBlockExplorer';
+import useBlockExplorer from '../../hooks/useBlockExplorer';
 
 const createStyles = (colors: any) =>
   StyleSheet.create({
@@ -63,14 +62,7 @@ const AssetOptions = (props: Props) => {
   const safeAreaInsets = useSafeAreaInsets();
   const navigation = useNavigation();
   const modalRef = useRef<ReusableModalRef>(null);
-  const provider = useSelector(
-    (state: any) => state.engine.backgroundState.NetworkController.provider,
-  );
-  const frequentRpcList = useSelector(
-    (state: any) =>
-      state.engine.backgroundState.PreferencesController.frequentRpcList,
-  );
-  const explorer = useBlockExplorer(provider, frequentRpcList);
+  const explorer = useBlockExplorer();
 
   const goToBrowserUrl = (url: string, title: string) => {
     modalRef.current?.dismissModal(() => {

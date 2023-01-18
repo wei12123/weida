@@ -63,7 +63,7 @@ import TokenSelectButton from './components/TokenSelectButton';
 import TokenSelectModal from './components/TokenSelectModal';
 import SlippageModal from './components/SlippageModal';
 import useBalance from './utils/useBalance';
-import useBlockExplorer from './utils/useBlockExplorer';
+import useBlockExplorer from '../../hooks/useBlockExplorer';
 import InfoModal from './components/InfoModal';
 import { toLowerCaseEquals } from '../../../util/general';
 import { AlertType } from '../../Base/Alert';
@@ -164,8 +164,6 @@ function SwapsAmountView({
   accounts,
   selectedAddress,
   chainId,
-  provider,
-  frequentRpcList,
   balances,
   tokensWithBalance,
   tokensTopAssets,
@@ -181,7 +179,7 @@ function SwapsAmountView({
   const { colors } = useTheme();
   const styles = createStyles(colors);
 
-  const explorer = useBlockExplorer(provider, frequentRpcList);
+  const explorer = useBlockExplorer();
   const initialSource = route.params?.sourceToken ?? SWAPS_NATIVE_ADDRESS;
   const [amount, setAmount] = useState('0');
   const [slippage, setSlippage] = useState(AppConstants.SWAPS.DEFAULT_SLIPPAGE);
@@ -941,17 +939,9 @@ SwapsAmountView.propTypes = {
    */
   setHasOnboarded: PropTypes.func,
   /**
-   * Current Network provider
-   */
-  provider: PropTypes.object,
-  /**
    * Chain Id
    */
   chainId: PropTypes.string,
-  /**
-   * Frequent RPC list from PreferencesController
-   */
-  frequentRpcList: PropTypes.array,
   /**
    * Function to set liveness
    */
