@@ -231,7 +231,7 @@ class TransactionReview extends PureComponent {
      */
     gasSelected: PropTypes.string,
     /**
-     * gas object for calculating the gas transaction cost
+     * gas object for calculating the gas transaction fee
      */
     gasObject: PropTypes.object,
     /**
@@ -242,8 +242,14 @@ class TransactionReview extends PureComponent {
     /**
      * dapp suggested fees
      */
-    dappSuggestedEIP1559Gas: PropTypes.string,
-    dappSuggestedGasPrice: PropTypes.string,
+    dappSuggestedEIP1559Gas: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]),
+    dappSuggestedGasPrice: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.object,
+    ]),
   };
 
   state = {
