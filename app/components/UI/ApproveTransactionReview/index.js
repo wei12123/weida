@@ -277,8 +277,9 @@ class ApproveTransactionReview extends PureComponent {
     const {
       transaction: { origin, to, data },
       tokenList,
+      selectedAddress
     } = this.props;
-    const { AssetsContractController } = Engine.context;
+    const { AssetsContractController, TokenBalancesController } = Engine.context;
 
     let host;
 
@@ -290,13 +291,14 @@ class ApproveTransactionReview extends PureComponent {
       host = getHost(origin);
     }
 
-    let tokenSymbol, tokenDecimals;
+    let tokenSymbol, tokenDecimals, tokenBalance;
     const contract = tokenList[safeToChecksumAddress(to)];
     if (!contract) {
       try {
         tokenDecimals = await AssetsContractController.getERC20TokenDecimals(
           to,
         );
+        tokenBalance = await TokenBalancesController.getERC20BalanceOf(to, selectedAddress);
         tokenSymbol = await AssetsContractController.getERC721AssetSymbol(to);
       } catch (e) {
         tokenSymbol = 'ERC20 Token';
@@ -320,7 +322,7 @@ class ApproveTransactionReview extends PureComponent {
         method,
         originalApproveAmount: approveAmount,
         tokenSymbol,
-        token: { symbol: tokenSymbol, decimals: tokenDecimals },
+        token: { symbol: tokenSymbol, decimals: tokenDecimals, tokenBalance },
         spenderAddress,
         encodedAmount,
         spendLimitCustomValue: minTokenAllowance,
@@ -596,12 +598,10 @@ class ApproveTransactionReview extends PureComponent {
       originalApproveAmount,
       customSpendAmount,
       multiLayerL1FeeTotal,
+      token
     } = this.state;
     const {
-      accounts,
-      selectedAddress,
       primaryCurrency,
-      tokenBalances,
       gasError,
       activeTabUrl,
       transaction: { origin },
@@ -622,6 +622,8 @@ class ApproveTransactionReview extends PureComponent {
     const styles = this.getStyles();
     const isTestNetwork = isTestNet(network);
 
+    const tokenBalance = renderFromTokenMinimalUnit(token?.tokenBalance, token?.decimals);
+
     const originIsDeeplink =
       origin === ORIGIN_DEEPLINK || origin === ORIGIN_QR_CODE;
     const errorPress = isTestNetwork ? this.goToFaucet : this.buyEth;
@@ -634,19 +636,8 @@ class ApproveTransactionReview extends PureComponent {
       gasEstimateType === GAS_ESTIMATE_TYPES.FEE_MARKET ||
       gasEstimateType === GAS_ESTIMATE_TYPES.NONE;
 
-      console.log(tokenBalances, 'tokenBalances[address]')
-
-      // todo: 
-      // temporal state.
       const userEnteredCustomSpend = false
-      const selectedBalance = accounts[selectedAddress].balance
-      const confirmBalance = getAccountBalance(selectedBalance)
  
-      // const balance =
-      // address in tokenBalances
-      //   ? renderFromTokenMinimalUnit(tokenBalances[address], decimals)
-      //   : undefined;
-      console.log(host, 'host')
     return (
       <>
         <View style={styles.section} testID={'approve-modal-test-id'}>
@@ -758,7 +749,7 @@ class ApproveTransactionReview extends PureComponent {
                         multiLayerL1FeeTotal={multiLayerL1FeeTotal}
                       />
                   ) : (
-                    <CustomSpendCap ticker={tokenSymbol} dappProposedValue={originalApproveAmount} accountBalance={confirmBalance} domain={host} onInputChanged={(val) => console.log(val, 'val')} />
+                    <CustomSpendCap ticker={tokenSymbol} dappProposedValue={originalApproveAmount} accountBalance={tokenBalance} domain={host} onInputChanged={(val) => console.log(val, 'val')} />
                   )}
                   {gasError && (
                     <View style={styles.errorWrapper}>
