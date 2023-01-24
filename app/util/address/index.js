@@ -23,7 +23,7 @@ import { PROTOCOLS } from '../../constants/deeplinks';
 import TransactionTypes from '../../core/TransactionTypes';
 
 const {
-  ASSET: { ERC721 },
+  ASSET: { ERC721, ERC1155 },
 } = TransactionTypes;
 /**
  * Returns full checksummed address
@@ -450,7 +450,7 @@ export const getTokenDetails = async (tokenAddress, userAddress, tokenId) => {
     tokenId,
   );
   const { standard, name, symbol, decimals } = tokenData;
-  if (standard === ERC721) {
+  if (standard === (ERC721 || ERC1155)) {
     return {
       name,
       symbol,
