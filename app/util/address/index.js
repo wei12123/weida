@@ -20,7 +20,11 @@ import {
   SYMBOL_ERROR,
 } from '../../../app/constants/error';
 import { PROTOCOLS } from '../../constants/deeplinks';
+import TransactionTypes from '../../core/TransactionTypes';
 
+const {
+  ASSET: { ERC721 },
+} = TransactionTypes;
 /**
  * Returns full checksummed address
  *
@@ -436,4 +440,26 @@ export const stripHexPrefix = (str) => {
     return str;
   }
   return isHexPrefixed(str) ? str.slice(2) : str;
+};
+
+export const getTokenDetails = async (tokenAddress, userAddress, tokenId) => {
+  const { AssetsContractController } = Engine.context;
+  const tokenData = await AssetsContractController.getTokenStandardAndDetails(
+    tokenAddress,
+    userAddress,
+    tokenId,
+  );
+  const { standard, name, symbol, decimals } = tokenData;
+  if (standard === ERC721) {
+    return {
+      name,
+      symbol,
+      standard,
+    };
+  }
+  return {
+    symbol,
+    decimals,
+    standard,
+  };
 };
