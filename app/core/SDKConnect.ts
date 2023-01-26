@@ -150,12 +150,13 @@ class Connection {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       this.backgroundBridge = new BackgroundBridge({
-        webview: null,
-        url: originatorInfo?.url,
-        isRemoteConn: true,
-        sendMessage: this.sendMessage,
-        getApprovedHosts: () => approvedHosts,
-        remoteConnHost: this.host,
+        connectionOptions: {
+          getApprovedHosts: () => approvedHosts,
+          remoteConnHost: this.host,
+          type: AppConstants.CONNECTION_TYPE.REMOTE,
+          sendMessage: this.sendMessage,
+          url: originatorInfo?.url,
+        },
         getRpcMethodMiddleware: ({
           getProviderState,
         }: {
@@ -188,7 +189,6 @@ class Connection {
             toggleUrlModal: () => null,
             injectHomePageScripts: () => null,
           }),
-        isMainFrame: true,
       });
 
       this.RemoteConn.on('message', async ({ message }) => {

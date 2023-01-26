@@ -298,14 +298,14 @@ class WalletConnect {
     this.hostname = new URL(this.url.current).hostname;
 
     this.backgroundBridge = new BackgroundBridge({
-      webview: null,
-      url: this.hostname,
-      isWalletConnect: true,
-      wcWalletConnector: this.walletConnector,
-      wcRequestActions: {
-        approveRequest: this.approveRequest,
-        rejectRequest: this.rejectRequest,
-        updateSession: this.updateSession,
+      connectionOptions: {
+        type: AppConstants.CONNECTION_TYPE.WALLET_CONNECT,
+        url: this.hostname,
+        wcRequestActions: {
+          approveRequest: this.approveRequest,
+          rejectRequest: this.rejectRequest,
+          updateSession: this.updateSession,
+        },
       },
       getRpcMethodMiddleware: ({ hostname, getProviderState }) =>
         getRpcMethodMiddleware({
@@ -329,7 +329,6 @@ class WalletConnect {
           tabId: false,
           isWalletConnect: true,
         }),
-      isMainFrame: true,
     });
   };
 
