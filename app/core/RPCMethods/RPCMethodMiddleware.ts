@@ -285,6 +285,12 @@ export const getRpcMethodMiddleware = ({
         const accounts = await getAccounts();
         res.result = accounts.length > 0 ? accounts[0] : null;
       },
+
+      parity_defaultAccount: async () => {
+        const accounts = await getAccounts();
+        res.result = accounts.length > 0 ? accounts[0] : null;
+      },
+
       eth_sendTransaction: () => {
         checkTabActive();
         checkActiveAccountAndChainId({
