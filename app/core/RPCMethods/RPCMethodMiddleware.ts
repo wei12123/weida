@@ -285,6 +285,17 @@ export const getRpcMethodMiddleware = ({
         const accounts = await getAccounts();
         res.result = accounts.length > 0 ? accounts[0] : null;
       },
+
+      eth_getTransactionCount: async () => {
+        const blockTag = req.params[1];
+
+        if (blockTag === 'pending') {
+          res.result = Engine.context.TransactionController.getNextNonce();
+        } else {
+          next();
+        }
+      },
+
       eth_sendTransaction: () => {
         checkTabActive();
         checkActiveAccountAndChainId({
