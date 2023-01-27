@@ -145,6 +145,7 @@
     "@metamask/controller-utils": "^1.0.0",
     "@metamask/design-tokens": "^1.9.0",
     "@metamask/etherscan-link": "^2.0.0",
+    "@metamask/eth-sig-util": "^5.0.2",
     "@metamask/gas-fee-controller": "^1.0.0",
     "@metamask/keyring-controller": "^1.0.1",
     "@metamask/message-manager": "^1.0.1",
