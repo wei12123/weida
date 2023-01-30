@@ -99,7 +99,7 @@ const RootRPCMethodsUI = (props) => {
     });
   };
 
-  const onUnapprovedMessage = (messageParams, type, origin) => {
+  const onUnapprovedMessage = (messageParams, type) => {
     setCurrentPageMeta(messageParams.meta);
     const signMessageParams = { ...messageParams };
     delete signMessageParams.meta;
