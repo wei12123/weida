@@ -56,7 +56,6 @@ import { useTheme } from '../../../util/theme';
 import downloadFile from '../../../util/browser/downloadFile';
 import { createBrowserUrlModalNavDetails } from '../BrowserUrlModal/BrowserUrlModal';
 import {
-  CONNECTION_TYPE,
   MM_PHISH_DETECT_URL,
   MM_BLOCKLIST_ISSUE_URL,
   PHISHFORT_BLOCKLIST_ISSUE_URL,
@@ -74,7 +73,7 @@ import {
   SWITCH_NETWORK_OPTION,
 } from '../../../../wdio/features/testIDs/BrowserScreen/OptionMenu.testIds';
 
-const { HOMEPAGE_URL, NOTIFICATION_NAMES } = AppConstants;
+const { CONNECTION_TYPE, HOMEPAGE_URL, NOTIFICATION_NAMES } = AppConstants;
 const HOMEPAGE_HOST = new URL(HOMEPAGE_URL)?.hostname;
 const MM_MIXPANEL_TOKEN = process.env.MM_MIXPANEL_TOKEN;
 
