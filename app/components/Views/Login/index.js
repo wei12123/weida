@@ -57,7 +57,7 @@ import {
   LOGIN_VIEW_TITLE_ID,
   LOGIN_VIEW_UNLOCK_BUTTON_ID,
 } from '../../../../wdio/screen-objects/testIDs/Screens/LoginScreen.testIds';
-import { createRestoreWalletNavDetails } from '../RestoreWallet/RestoreWallet';
+import { createRestoreWalletNavDetailsNested } from '../RestoreWallet/RestoreWallet';
 import { parseVaultValue } from '../../../util/validators';
 import { getVaultFromBackup } from '../../../core/backupVault';
 
@@ -325,7 +325,7 @@ class Login extends PureComponent {
               authData.type,
             );
             navigation.navigate(
-              ...createRestoreWalletNavDetails({
+              ...createRestoreWalletNavDetailsNested({
                 previousScreen: Routes.ONBOARDING.LOGIN,
               }),
             );
