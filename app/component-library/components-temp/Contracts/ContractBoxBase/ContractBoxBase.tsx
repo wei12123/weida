@@ -87,11 +87,9 @@ const ContractBoxBase = ({
             <Button
               variant={ButtonVariants.Link}
               textVariants={TextVariants.sHeadingMD}
-              style={styles.header}
+              label={formattedAddress}
               onPress={onContractPress}
-            >
-              {formattedAddress}
-            </Button>
+            />
           </View>
         )}
       </View>
