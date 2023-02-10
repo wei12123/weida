@@ -214,7 +214,6 @@ const App = ({ selectedAddress, userLoggedIn }) => {
   const animationRef = useRef(null);
   const animationNameRef = useRef(null);
   const opacity = useRef(new Animated.Value(1)).current;
-  const authOnLoadAuthLock = useRef(false);
   const [navigator, setNavigator] = useState(undefined);
   const prevNavigator = useRef(navigator);
   const [route, setRoute] = useState();

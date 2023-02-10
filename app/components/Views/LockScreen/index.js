@@ -122,11 +122,7 @@ class LockScreen extends PureComponent {
   }
 
   lock = async () => {
-<<<<<<< HEAD
     await Authentication.lockApp(false);
-=======
-    await Authentication.lockApp();
->>>>>>> 99606a877 (use routes object)
     this.props.navigation.navigate(Routes.ONBOARDING.LOGIN);
   };
 
@@ -149,11 +145,7 @@ class LockScreen extends PureComponent {
           params: { screen: 'Onboarding' },
         });
       }
-<<<<<<< HEAD
       this.props.navigation.navigate(Routes.ONBOARDING.HOME_NAV);
-=======
-      this.props.navigation.replace(Routes.ONBOARDING.HOME_NAV);
->>>>>>> 99606a877 (use routes object)
     } catch (error) {
       if (this.unlockAttempts <= 3) {
         this.unlockKeychain();

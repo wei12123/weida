@@ -258,7 +258,6 @@ class Engine {
 
       const additionalKeyrings = [QRHardwareKeyring];
 
-<<<<<<< HEAD
       const getIdentities = () => {
         const identities = preferencesController.state.identities;
         const newIdentities = {};
@@ -267,10 +266,8 @@ class Engine {
         });
         return newIdentities;
       };
-      const keyRingState =
-=======
+
       const keyringState =
->>>>>>> 1b19d3005 (cleanup)
         initialKeyringState || initialState.KeyringController;
 
       const newKeyringController = new KeyringController(
