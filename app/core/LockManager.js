@@ -54,11 +54,8 @@ export default class LockManager {
   };
 
   lockApp = async () => {
-    const { KeyringController } = Engine.context;
-    if (
-      !SecureKeychain.getInstance().isAuthenticating &&
-      KeyringController.isUnlocked()
-    ) {
+    if (!SecureKeychain.getInstance().isAuthenticating) {
+      const { KeyringController } = Engine.context;
       try {
         await KeyringController.setLocked();
         this.gotoLockScreen();

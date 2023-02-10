@@ -2,8 +2,8 @@ import { renderHook } from '@testing-library/react-hooks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useDeleteWallet from './useDeleteWallet';
 import { Authentication } from '../../../core';
-import Engine from '../../../core/Engine';
 import AUTHENTICATION_TYPE from '../../../constants/userProperties';
+import Engine from '../../../core/Engine';
 
 jest.mock('../../../core/Engine', () => ({
   resetState: jest.fn(),
