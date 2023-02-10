@@ -270,7 +270,7 @@ class Engine {
       const keyringState =
         initialKeyringState || initialState.KeyringController;
 
-      const newKeyringController = new KeyringController(
+      const keyringController = new KeyringController(
         {
           removeIdentity: preferencesController.removeIdentity.bind(
             preferencesController,
@@ -293,7 +293,7 @@ class Engine {
       );
 
       const controllers = [
-        newKeyringController,
+        keyringController,
         new AccountTrackerController({
           onPreferencesStateChange: (listener) =>
             preferencesController.subscribe(listener),
