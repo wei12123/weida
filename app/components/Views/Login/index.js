@@ -320,7 +320,7 @@ class Login extends PureComponent {
           try {
             await Authentication.storePassword(
               this.state.password,
-              authData.type,
+              authData.currentAuthType,
             );
             navigation.navigate(
               ...createRestoreWalletNavDetailsNested({
