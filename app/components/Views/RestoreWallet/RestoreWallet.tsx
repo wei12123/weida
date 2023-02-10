@@ -4,7 +4,7 @@ import { View, Image, ActivityIndicator } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
-  TextVariants,
+  TextVariant,
 } from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
 import {
@@ -81,10 +81,10 @@ const RestoreWallet = () => {
         <View style={styles.images}>
           <Image source={onboardingDeviceImage} />
         </View>
-        <Text variant={TextVariants.lHeadingLG} style={styles.title}>
+        <Text variant={TextVariant.HeadingLG} style={styles.title}>
           {strings('restore_wallet.restore_needed_title')}
         </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+        <Text variant={TextVariant.BodyMD} style={styles.description}>
           {strings('restore_wallet.restore_needed_description')}
         </Text>
       </View>

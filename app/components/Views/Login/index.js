@@ -301,15 +301,15 @@ class Login extends PureComponent {
     return false;
   };
 
-  handleVaultCorruption = async (error) => {
+  handleVaultCorruption = async () => {
+    const LOGIN_VAULT_CORRUPTION_TAG = 'Login/ handleVaultCorruption:';
     const { navigation } = this.props;
-    const { vault } = await getVaultFromBackup();
-
-    if (vault && this.state.password) {
-      try {
+    try {
+      const backupResult = await getVaultFromBackup();
+      if (backupResult.vault && this.state.password) {
         const vaultSeed = await parseVaultValue(
           this.state.password,
-          vault.toString(),
+          backupResult.vault,
         );
         if (vaultSeed) {
           // get authType
@@ -327,29 +327,21 @@ class Login extends PureComponent {
                 previousScreen: Routes.ONBOARDING.LOGIN,
               }),
             );
+            this.setState({
+              loading: false,
+              error: null,
+            });
           } catch (e) {
-            Logger.log(
-              'Login handleVaultCorruption',
-              'Login Authentication.storePassword failed with the following error',
-              e,
-            );
+            throw new Error(`${LOGIN_VAULT_CORRUPTION_TAG} ${e}`);
           }
         } else {
-          // current password does not unlock the vault
-          this.setState({
-            loading: false,
-            error: strings('login.invalid_password'),
-          });
+          throw new Error(`${LOGIN_VAULT_CORRUPTION_TAG} Invalid Password`);
         }
-      } catch (error) {
-        // current password does not unlock the vault
-        this.setState({
-          loading: false,
-          error: strings('login.invalid_password'),
-        });
+      } else if (backupResult.error) {
+        throw new Error(`${LOGIN_VAULT_CORRUPTION_TAG} ${backupResult.error}`);
       }
-    } else {
-      // no password
+    } catch (e) {
+      Logger.error(e);
       this.setState({
         loading: false,
         error: strings('login.invalid_password'),

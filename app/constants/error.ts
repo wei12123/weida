@@ -28,3 +28,5 @@ export const NO_VAULT_IN_BACKUP_ERROR = 'No vault in backup';
 export const VAULT_BACKUP_FAILED = 'Vault backup failed';
 export const VAULT_BACKUP_FAILED_UNDEFINED =
   'Unable to backup vault as it is undefined';
+export const VAULT_FAILED_TO_GET_VAULT_FROM_BACKUP =
+  'getVaultFromBackup failed to retrieve vault';

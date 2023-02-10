@@ -510,9 +510,9 @@ class Engine {
       backupVault(state)
         .then((result) => {
           if (result.success) {
-            Logger.log('Engine', 'Vault back up successful', result);
+            Logger.log('Engine', 'Vault back up successful');
           } else {
-            Logger.log('Engine', 'Vault backup failed', result);
+            Logger.log('Engine', 'Vault backup failed', result.error);
           }
         })
         .catch((error) => {

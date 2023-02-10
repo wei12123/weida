@@ -10,6 +10,7 @@ import {
 import {
   VAULT_BACKUP_FAILED,
   VAULT_BACKUP_FAILED_UNDEFINED,
+  VAULT_FAILED_TO_GET_VAULT_FROM_BACKUP,
 } from '../constants/error';
 
 const VAULT_BACKUP_KEY = 'VAULT_BACKUP';
@@ -20,13 +21,8 @@ const options: Options = {
 
 interface KeyringBackupResponse {
   success: boolean;
-  message: string;
-  state?: KeyringState;
-}
-
-interface FetchKeyringFromBackupResponse {
-  success: boolean;
   vault?: string;
+  error?: string;
 }
 
 /**
@@ -34,8 +30,8 @@ interface FetchKeyringFromBackupResponse {
  * @returns Promise<KeyringBackupResponse>
   interface KeyringBackupResponse {
     success: boolean;
-    message: string;
-    state?: KeyringState;
+    error?: string;
+    vault?: string;
   }
  */
 export async function backupVault(
@@ -52,43 +48,40 @@ export async function backupVault(
       Logger.error(VAULT_BACKUP_KEY, VAULT_BACKUP_FAILED);
       const response: KeyringBackupResponse = {
         success: false,
-        message: VAULT_BACKUP_FAILED,
+        error: VAULT_BACKUP_FAILED,
       };
       return response;
     }
     const response: KeyringBackupResponse = {
       success: true,
-      message: 'Vault successfully backed up',
-      state: {
-        vault: keyringState.vault,
-        keyrings: keyringState.keyrings,
-      },
+      vault: keyringState.vault,
     };
     return response;
   }
   Logger.error(VAULT_BACKUP_KEY, VAULT_BACKUP_FAILED_UNDEFINED);
   const response: KeyringBackupResponse = {
     success: false,
-    message: VAULT_BACKUP_FAILED_UNDEFINED,
+    error: VAULT_BACKUP_FAILED_UNDEFINED,
   };
   return response;
 }
 
 /**
  * retrieves the vault backup from react-native-keychain
- * @returns Promise<FetchKeyringFromBackupResponse>
- * FetchKeyringFromBackupResponse {
+ * @returns Promise<KeyringBackupResponse>
+  interface KeyringBackupResponse {
     success: boolean;
+    error?: string;
     vault?: string;
   }
  */
-export async function getVaultFromBackup(): Promise<FetchKeyringFromBackupResponse> {
+export async function getVaultFromBackup(): Promise<KeyringBackupResponse> {
   const credentials = await getInternetCredentials(VAULT_BACKUP_KEY);
   if (credentials) {
     return { success: true, vault: credentials.password };
   }
-  Logger.error(VAULT_BACKUP_KEY, 'getVaultFromBackup failed to retrieve vault');
-  return { success: false };
+  Logger.error(VAULT_BACKUP_KEY, VAULT_FAILED_TO_GET_VAULT_FROM_BACKUP);
+  return { success: false, error: VAULT_FAILED_TO_GET_VAULT_FROM_BACKUP };
 }
 
 /**

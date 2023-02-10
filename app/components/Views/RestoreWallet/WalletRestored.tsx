@@ -10,7 +10,7 @@ import {
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
-  TextVariants,
+  TextVariant,
 } from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
 import { createNavigationDetails } from '../../../util/navigation/navUtils';
@@ -75,26 +75,26 @@ const WalletRestored = () => {
     <SafeAreaView style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
         <RNText style={styles.emoji}>🎉</RNText>
-        <Text variant={TextVariants.lHeadingLG} style={styles.title}>
+        <Text variant={TextVariant.HeadingLG} style={styles.title}>
           {strings('wallet_restored.wallet_restored_title')}
         </Text>
         <Text style={styles.description}>
-          <Text variant={TextVariants.sBodyMD}>
+          <Text variant={TextVariant.BodyMD}>
             {`${strings(
               'wallet_restored.wallet_restored_description_part_one',
             )}\n\n`}
           </Text>
-          <Text variant={TextVariants.sBodyMD} style={styles.description}>
+          <Text variant={TextVariant.BodyMD} style={styles.description}>
             {strings('wallet_restored.wallet_restored_description_part_two')}
           </Text>
           <Text
-            variant={TextVariants.sBodyMD}
+            variant={TextVariant.BodyMD}
             style={styles.blueText}
             onPress={onPressBackupSRP}
           >
             {` ${strings('wallet_restored.wallet_restored_description_link')} `}
           </Text>
-          <Text variant={TextVariants.sBodyMD}>
+          <Text variant={TextVariant.BodyMD}>
             {strings('wallet_restored.wallet_restored_description_part_three')}
           </Text>
         </Text>

@@ -69,7 +69,7 @@ class EngineService {
       },
       {
         name: 'PermissionController',
-        key: `${Engine.context.PermissionController.name}:stateChange`,
+        key: `${engine.context.PermissionController.name}:stateChange`,
       },
     ];
 

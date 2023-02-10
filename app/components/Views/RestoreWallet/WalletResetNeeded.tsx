@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { strings } from '../../../../locales/i18n';
 import { createStyles } from './styles';
 import Text, {
-  TextVariants,
+  TextVariant,
 } from '../../../component-library/components/Texts/Text';
 import StyledButton from '../../UI/StyledButton';
 import { createNavigationDetails } from '../../../util/navigation/navUtils';
@@ -72,16 +72,16 @@ const WalletResetNeeded = () => {
             color={colors.error.default}
           />
         </View>
-        <Text variant={TextVariants.lHeadingLG} style={styles.title}>
+        <Text variant={TextVariant.HeadingLG} style={styles.title}>
           {strings('new_wallet_needed.new_wallet_needed_title')}
         </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+        <Text variant={TextVariant.BodyMD} style={styles.description}>
           {strings('new_wallet_needed.new_wallet_needed_description_part_one')}
         </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+        <Text variant={TextVariant.BodyMD} style={styles.description}>
           {strings('new_wallet_needed.new_wallet_needed_description_part_two')}
         </Text>
-        <Text variant={TextVariants.sBodyMD} style={styles.description}>
+        <Text variant={TextVariant.BodyMD} style={styles.description}>
           {strings(
             'new_wallet_needed.new_wallet_needed_description_part_three',
           )}
