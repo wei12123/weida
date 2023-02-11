@@ -248,7 +248,7 @@
     "redux-mock-store": "1.5.4",
     "redux-persist": "6.0.0",
     "redux-persist-filesystem-storage": "^3.0.0",
-    "reselect": "^4.0.0",
+    "reselect": "^4.1.7",
     "rn-fetch-blob": "^0.12.0",
     "stream-browserify": "1.0.0",
     "swappable-obj-proxy": "^1.1.0",
